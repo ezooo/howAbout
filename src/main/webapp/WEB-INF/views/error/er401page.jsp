@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 	인증된 요청이 아닙니다.
 	세션이 만료되었습니다.
-	<p>a<a href="/howAbout">메인으로</a></p>
+	<p><a href="/howAbout">메인으로</a></p>
 </body>
 </html>

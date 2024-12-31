@@ -10,7 +10,7 @@
 <title>로케이션 카테고리</title>
 </head>
 <body>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <%
 	ArrayList<Location> locations = (ArrayList<Location>)request.getAttribute("locations");
 	String category = (String)request.getAttribute("category");

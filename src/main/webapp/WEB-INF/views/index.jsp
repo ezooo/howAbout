@@ -333,7 +333,7 @@
 			<nav>
 				<a href="/howAbout/user/logout" class="nav-item">로그아웃</a>
 				<a href="/howAbout/" class="nav-item">회원정보</a>
-				<a href="/howAbout/" class="nav-item">다이어리</a>
+				<a href="/howAbout/diaries" class="nav-item">다이어리</a>
 				<a href="/howAbout/" class="nav-item">여행계획</a>
 				<a href="/howAbout/" class="nav-item">캘린더</a>
 			</nav>
@@ -342,14 +342,14 @@
 		<div id="mainMenu" class="container">
 			<div class="main_one">
 				<div class="mainMenu1"> <div class="mainMenuText"><i class="fa-solid fa-user-tag"></i><br><a href="/howAbout/user/myPage">내 정보</a></div> <div class="main_under1"></div> </div>
-				<div class="mainMenu2"> <div class="mainMenuText"><i class="fa-solid fa-book"></i><br>다이어리</div> <div class="main_under2"></div> </div>
+				<div class="mainMenu2"> <div class="mainMenuText"><i class="fa-solid fa-book"></i><br><a href="/howAbout/diaries">다이어리</a></div> <div class="main_under2"></div> </div>
 				<div class="mainMenu3"> <div class="mainMenuText"><i class="fa-solid fa-paper-plane"></i><br>여행계획</div> <div class="main_under3"></div> </div>
 				<div class="mainMenu4"> <div class="mainMenuText"><i class="fa-solid fa-calendar"></i><br>캘린더</div> <div class="main_under4"></div> </div>
 			</div>
 			<div class="main_one">
 				<div class="mainMenu5"> <div class="mainMenuText"><i class="fa-solid fa-explosion"></i><br>축제</div></div>
 				<div class="mainMenu6"> <div class="mainMenuText"><i class="fa-solid fa-bowl-food"></i><br><a href="/howAbout/place/serchRest">맛집</a></div></div>
-				<div class="mainMenu7"> <div class="mainMenuText"><i class="fa-solid fa-map-location-dot"></i><br>관광</div></div>
+				<div class="mainMenu7"> <div class="mainMenuText"><i class="fa-solid fa-map-location-dot"></i><br><a href="/howAbout/location">관광</a></div></div>
 				<div class="mainMenu8"> <div class="mainMenuText"><i class="fa-solid fa-comments"></i><br>후기</div></div>
 			</div>
 		</div>

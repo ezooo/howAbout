@@ -13,7 +13,7 @@
 <%
 	Diary diary = (Diary)request.getAttribute("diaryById");
 %>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <br>
 <p>다이어리 수정 폼 입니다.</p>
 <form action="/howAbout/diaries/updateDiary" method="post" enctype="multipart/form-data">

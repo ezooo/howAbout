@@ -1,19 +1,13 @@
 package com.springproject.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.springproject.domain.Location;
+import com.springproject.domain.Member;
 import com.springproject.service.LocationService;
 
 @Controller
@@ -42,168 +37,118 @@ public class LocationController
 	}
 	
 	@RequestMapping("/addapi")
-	public String addLocationAPI()
+	public String addLocationAPI(HttpServletRequest request)	//관리자만 사용할 수 있도록 코드 수정
 	{
-		System.out.println("LocationController /addapi 매핑");
-		System.out.println("API 받아와서 로케이션 저장하기");
-		
-		//api 요청 할 주소
-		String apiUrl = "http://apis.data.go.kr/6480000/gyeongnamtournature/gyeongnamtournaturelist?"
-			+ "serviceKey=axdk7ixVxHHdRzI6x1lL6%2FCGVvu%2BsCRNby2Z9thO7g6TdPJCowoZhR0q4PDgM59dCD9YX5EcHqKp0T%2BcSJoNXw%3D%3D&numOfRows=50&pageNo=1&resultType=json"; // 호출할 API URL
-			    
-		try 
-	    {
-			System.out.println("서버와 연결 try in");
-	        // URL 객체 생성
-	        URL url = new URL(apiUrl);
-
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setRequestMethod("GET"); // 요청 방식 설정
-	        BufferedReader br;	//input을 읽어오기 위한 클래스
-
-	        int responseCode = connection.getResponseCode();
-	        if (responseCode == 200) //HttpURLConnection.HTTP_OK 써도 됨
-	        {
-	        	System.out.println("정상적인 응답코드 200 확인 완료. 데이터를 읽어오자");
-	            // 응답 데이터 읽기
-	            br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-	            
-	            String inputLine;
-	            StringBuffer response = new StringBuffer();	//json
-	            
-	            while((inputLine = br.readLine()) != null) 
-	            {	
-	            	response.append(inputLine);
-	            }
-	            br.close();
-	            System.out.println("작성완료");
-
-	            JSONTokener tokener = new JSONTokener(response.toString());	//json
-	            JSONObject json = new JSONObject(tokener);	
-	            JSONObject gyeongnam = json.getJSONObject("gyeongnamtournaturelist");	// json 객체에서 키로 경남꺼내기
-	            System.out.println(gyeongnam);
-	            JSONObject body = gyeongnam.getJSONObject("body");	//바디 객체 꺼내기
-	            System.out.println("바디꺼냄 : "+body.toString());
-	            JSONObject items = body.getJSONObject("items");
-	            JSONArray item = items.getJSONArray("item");
-	            
-	            for(int i=0; i<item.length(); i++)
-	            {
-	            	JSONObject location = item.getJSONObject(i);
-	            	System.out.println("location "+i+"번째 꺼냄 : "+location);
-	            	
-	            	//주소 가공하기
-	            	String jsonaddr = location.getString("user_address");
-	            	//이걸 함수에 실어보내서 api 요청함 --> 가공된 주소와 위도경도 받아오기
-	            	String[] contents = locationService.getAPIContents(jsonaddr);
-	            	{
-	            		location.put("user_address", contents[0]);
-	            		location.put("lattitude", contents[1]);
-	            		location.put("logitude", contents[2]);
-	            	}
-	            	
-	            	//중복데이터는 받아오지 않도록 처리하기 위해 if문 돌릴건데
-	            	//방금 꺼낸 데이터랑 db 저장된 데이터 비교해야하므로 db 검색 함수 추가해야 함
-	            	//data_title 만 가져와서 비교하도록 설정하기 String List 받아야 함
-	            	List<String> titleList = locationService.getAlltitle();
-	            	List<String> addrList = locationService.getAlladdr(); 	
-	            	
-	            	if(titleList.contains(location.getString("data_title")))
-	            	{
-	            		System.out.println("addLocationAPI 같은 이름 발견..");
-	            		if(addrList.contains(location.getString("user_address")))
-	            		{
-	            			System.out.println("addLocationAPI 주소도 같음 중복 !! ");
-	            			continue;
-	            		}
-	            		System.out.println("주소는 다른 듯");
-	            	}
-	            	System.out.println("장소이름은 : "+location.getString("data_title"));
-	            	System.out.println("주소는 : "+location.getString("user_address"));
-	            	
-	            	locationService.addLocationAPI(location);
-	            }
-	            System.out.println("로케이션 꺼내기 완료 !");
-	        } 
-	        else 
-	        {
-	            System.out.println("GET 요청 실패: " + responseCode);
-	        }
-	    } 
-		catch (Exception e) 
+		String sessionid;
+		if(request.getSession(false) != null)
 		{
-	        e.printStackTrace();
-	    }
-		
-		System.out.println("로케이션 저장완료");
-		return "redirect:/";
-	}
-	
-	
-	public String addL()
-	{
-		System.out.println("LocationController /location 매핑");
-		System.out.println("API 받아와서 로케이션 저장하기");
-		
-		//api 요청 할 주소
-		String apiUrl = "http://apis.data.go.kr/6480000/gyeongnamtournature/gyeongnamtournaturelist?"
-			+ "serviceKey=axdk7ixVxHHdRzI6x1lL6%2FCGVvu%2BsCRNby2Z9thO7g6TdPJCowoZhR0q4PDgM59dCD9YX5EcHqKp0T%2BcSJoNXw%3D%3D&numOfRows=20&pageNo=1&resultType=json"; // 호출할 API URL
-			    
-		try 
-	    {
-			System.out.println("서버와 연결 try in");
-	        URL url = new URL(apiUrl);
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setRequestMethod("GET"); // 요청 방식 설정
-	        BufferedReader br;	//input을 읽어오기 위한 클래스
-	
-	        // 응답 코드 확인
-	        int responseCode = connection.getResponseCode();
-	        if (responseCode == 200) //HttpURLConnection.HTTP_OK 써도 됨
-	        {
-	        	System.out.println("정상적인 응답코드 200 확인 완료. 데이터를 읽어오자");
-	            // 응답 데이터 읽기
-	            br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-	            
-	            String inputLine;
-	            //StringBuilder response = new StringBuilder(); 뤼튼의 추천
-	            StringBuffer response = new StringBuffer();	//json
-	            
-	            while((inputLine = br.readLine()) != null) 
-	            {	
-	            	response.append(inputLine);
-	            }
-	            br.close();
-	            System.out.println("작성완료");
-	            JSONTokener tokener = new JSONTokener(response.toString());	//json
-			    
-	            JSONObject json = new JSONObject(tokener);	//이게 최상위임 : json 객체
-	           
-	            JSONObject gyeongnam = json.getJSONObject("gyeongnamtournaturelist");	// json 객체에서 키로 경남꺼내기
-	            System.out.println(gyeongnam);
-	            JSONObject body = gyeongnam.getJSONObject("body");	//바디 객체 꺼내기
-	            System.out.println("바디꺼냄 : "+body.toString());
-	            JSONObject items = body.getJSONObject("items");
-	            JSONArray item = items.getJSONArray("item");
-	            JSONObject location = item.getJSONObject(0);
-	            System.out.println("location 0번째 꺼냄 : "+location);
-	            locationService.addLocationAPI(location);
-	        } 
-	        else 
-	        {
-	            System.out.println("GET 요청 실패: " + responseCode);
-	            //br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-	            //요청이 실패했으면 에러코드를 버퍼에 담음
-	        }
-	    } 
-		catch (Exception e) 
-		{
-	        e.printStackTrace();
-	    }
-		
-		
-		System.out.println("로케이션 저장완료");
-		return "location/location";
+			System.out.println("세션은 받아왔니..");
+			sessionid = request.getSession(false).getId();
+			if(sessionid != null)
+			{	System.out.println("여기는 왔니..");
+				Member mb = (Member) request.getSession(false).getAttribute("userStatus");
+				if(mb !=  null && mb.getUserId().equals("admin"))
+				{
+					System.out.println("LocationController /addapi 매핑 성공");
+					APIFileWriting afile = new APIFileWriting();
+					//api 요청 할 주소
+					String apiUrl = "http://apis.data.go.kr/6480000/gyeongnamtournature/gyeongnamtournaturelist?"
+						+ "serviceKey=axdk7ixVxHHdRzI6x1lL6%2FCGVvu%2BsCRNby2Z9thO7g6TdPJCowoZhR0q4PDgM59dCD9YX5EcHqKp0T%2BcSJoNXw%3D%3D&numOfRows=50&pageNo=1&resultType=json"; // 호출할 API URL
+						    
+					try 
+				    {
+						System.out.println("로케이션 받아오기 - 서버와 연결 try in");
+				        // URL 객체 생성
+				        URL url = new URL(apiUrl);
+			
+			//	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			//	        connection.setRequestMethod("GET"); // 요청 방식 설정
+			//	        BufferedReader br;	//input을 읽어오기 위한 클래스
+			//
+			//	        int responseCode = connection.getResponseCode();
+			//	        if (responseCode == 200) //HttpURLConnection.HTTP_OK 써도 됨
+			//	        {
+			//	        	System.out.println("정상적인 응답코드 200 확인 완료. 데이터를 읽어오자");
+			//	            // 응답 데이터 읽기
+			//	            br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+			//	            
+			//	            String inputLine;
+			//	            StringBuffer response = new StringBuffer();	//json
+			//	            
+			//	            while((inputLine = br.readLine()) != null) 
+			//	            {	
+			//	            	response.append(inputLine);
+			//	            }
+			//	            br.close();
+			//	            System.out.println("작성완료");
+			//
+			//	            JSONTokener tokener = new JSONTokener(response.toString());	//json
+			//	            JSONObject json = new JSONObject(tokener);	
+				        	JSONObject json = afile.returnJson(url);
+				            JSONObject gyeongnam = json.getJSONObject("gyeongnamtournaturelist");	// json 객체에서 키로 경남꺼내기
+				            System.out.println(gyeongnam);
+				            JSONObject body = gyeongnam.getJSONObject("body");	//바디 객체 꺼내기
+				            System.out.println("바디꺼냄 : "+body.toString());
+				            JSONObject items = body.getJSONObject("items");
+				            JSONArray item = items.getJSONArray("item");
+				            
+				            for(int i=0; i<item.length(); i++)
+				            {
+				            	JSONObject location = item.getJSONObject(i);
+				            	System.out.println("location "+i+"번째 꺼냄 : "+location);
+				            	
+				            	//주소 가공하기
+				            	String jsonaddr = location.getString("user_address");
+				            	//이걸 함수에 실어보내서 api 요청함 --> 가공된 주소와 위도경도 받아오기
+				            	String[] contents = locationService.getAPIContents(jsonaddr);
+				            	if(contents!=null && contents.length!=0)
+				            	{
+				            		location.put("user_address", contents[0]);
+				            		location.put("lattitude", contents[1]);
+				            		location.put("logitude", contents[2]);
+				            	}
+				            	
+				            	//중복데이터는 받아오지 않도록 처리하기 위해 if문 돌릴건데
+				            	//방금 꺼낸 데이터랑 db 저장된 데이터 비교해야하므로 db 검색 함수 추가해야 함
+				            	//data_title 만 가져와서 비교하도록 설정하기 String List 받아야 함
+				            	List<String> titleList = locationService.getAlltitle();
+				            	List<String> addrList = locationService.getAlladdr(); 	
+				            	
+				            	if(titleList.contains(location.getString("data_title")))
+				            	{
+				            		System.out.println("addLocationAPI 같은 이름 발견..");
+				            		if(addrList.contains(location.getString("user_address")))
+				            		{
+				            			System.out.println("addLocationAPI 주소도 같음 중복 !! ");
+				            			continue;
+				            		}
+				            	}
+				            	System.out.println("장소이름은 : "+location.getString("data_title"));
+				            	System.out.println("주소는 : "+location.getString("user_address"));
+				            	
+				            	locationService.addLocationAPI(location);
+				            }
+				            System.out.println("로케이션 꺼내기 완료 !");
+			//	        } 
+			//	        else 
+			//	        {
+			//	            System.out.println("GET 요청 실패: " + responseCode);
+			//	        }
+				    } 
+					catch (Exception e) 
+					{
+				        e.printStackTrace();
+				    }
+					
+					System.out.println("로케이션 저장완료");
+				}
+				else
+				{
+					System.out.println("로케이션 api 호출 권한이 없습니다. 실패 !");
+				}
+			}
+		}
+		return "redirect:/location";
 	}
 
 	@GetMapping("/locations")
@@ -331,25 +276,7 @@ public class LocationController
 	public String submitUpdateLocation(@ModelAttribute Location location, Model model)
 	{
 		System.out.println("LocationController submitUpdateLocation in");
-		//모델에 담아 둔 num 꺼내서 DTO에 담기
-//		Integer num = (Integer)model.asMap().get("num");
-//		System.out.println("num : "+num);
-//		if(num!=null)	//받아온 num이 유효할 때
-//		{
-//			location.setNum(num);
-//			System.out.println("dto에 num 셋 완료");
-//		}
-		
-//		String title = location.getData_title();
-//		String title2=null;
-//		try 
-//		{
-//			title2 = URLEncoder.encode(title, "UTF-8").replace("+", "%20");
-//		} 
-//		catch (UnsupportedEncodingException e) 
-//		{
-//			e.printStackTrace();
-//		}
+
 		int num = location.getNum();
 		locationService.submitUpdateLocation(location);
 		System.out.println("LocationController submitUpdateLocation 수정완료");
@@ -367,7 +294,7 @@ public class LocationController
 	}
 
 	@GetMapping("/findLocation")
-	@ResponseBody	//json 형식으로 응답하기 위한 코드
+	@ResponseBody
 	public List<Location> findLocations(@RequestParam String title)
 	{
 		System.out.println("LocationController findLocations in");

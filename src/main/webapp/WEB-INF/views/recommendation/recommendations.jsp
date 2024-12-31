@@ -13,7 +13,7 @@
 <%
 	ArrayList<Recommendation> recommendationList = (ArrayList<Recommendation>)request.getAttribute("recommendationList");
 %>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 
 <p>새로운 여행지를 추천해주세요 !</p>
 <hr><hr>

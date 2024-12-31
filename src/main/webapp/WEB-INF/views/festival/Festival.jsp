@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="./">Home</a>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+
 <p><a href=" ${pageContext.request.contextPath}/festival/add" class="btn btn-secondary" role="button">festival 추가 &raquo;</a></p>
 <div class="container">
 	<div class="row" align="center">

@@ -8,7 +8,7 @@ public class homeController {
 	
     @GetMapping("/")
     public String home() {
-        return "index"; // 기본 페이지로 리다이렉트
+        return "main"; // 기본 페이지로 리다이렉트
     }
     
 }

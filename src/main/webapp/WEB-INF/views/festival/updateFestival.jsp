@@ -9,6 +9,7 @@
 <title>스케줄 수정</title>
 </head>
 <body>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
  	<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<div class="container">
 			<div class="navbar-header">
