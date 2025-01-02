@@ -8,8 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 	접근이 거부되었습니다.
 	해당 어카운트에 관리자 권한이 존재하지 않습니다.
-	<p>a<a href="/howAbout">메인으로</a></p>
+	<p><a href="/howAbout">메인으로</a></p>
 </body>
 </html>

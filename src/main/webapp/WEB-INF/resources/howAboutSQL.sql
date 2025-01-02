@@ -1,4 +1,4 @@
--- drop database howAbout;
+ drop database howAbout;
 create database howAbout;
 use howAbout;
 
@@ -77,7 +77,7 @@ create table IF NOT EXISTS course(
     userId varchar(20),
     creation_date datetime(3)
 )DEFAULT CHARSET=utf8;
-drop table course;
+
 create table IF NOT EXISTS course_location(
 	course_id bigint,
     location_name varchar(20),

@@ -7,26 +7,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>전체 다이어리 보기</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-    	*{
-    		margin : 0 auto;
-    	}
-        body {
-            background-image: url('/howAbout/resources/images/back.png');
-            background-position: center; /* 중앙에 위치 */
-            background-repeat: no-repeat; /* 반복하지 않음 */
-            background-size: contain; /* 이미지 크기를 화면에 맞게 조정 */
-            height: 100vh; /* 전체 화면 높이 */
-            margin: 0; /* 기본 마진 제거 */
-            
+<title>HowAbout_Diaries</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .noto-sans-kr-<uniquifier> {
+	  font-family: "Noto Sans KR", serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+	}
+*{
+	margin : 0 auto;
+	padding : 0px;
+	box-sizing: border-box;
+	text-decoration: none;
+}
+body{
+	width : 100%;
+}
+        #body {
+            padding: 20px;
+            width : 100%;
+            font-family: "Noto Sans KR", serif;
         }
         .container {
-	        max-width: 65%; /* 최대 너비 설정 */
+	        max-width: 80%; /* 최대 너비 설정 */
 	        margin: 0 auto; /* 중앙 정렬 */
-	        padding: 0 20px; /* 양쪽 여백 설정 */
+	        padding: 20px; /* 양쪽 여백 설정 */
 	    }
+
 	    .diary-box {
 	        position: relative;
 	        border: 1px hidden;
@@ -45,20 +56,17 @@
 	        margin-bottom: 0px; /* 아래쪽 간격 설정 */
 	        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* 그림자 추가 */
 	    }
-	    .diary-image {
-	        display: none; /* 이미지 요소는 숨김 */
-	    }
-	
+
 	    /* 일반 박스의 최대 크기 설정 */
 	    .regular-box {
-	        max-width: 300px; /* 최대 가로 길이 300px */
-	        max-height: 250px; /* 최대 세로 길이 250px */
+	        max-width: 500px; /* 최대 가로 길이 300px */
+	        max-height: 400px; /* 최대 세로 길이 250px */
 	    }
 	
 	    /* 네 번째 박스의 세로 최대 길이 설정 */
 	    #fourth-box {
-	        max-height: 250px; /* 최대 세로 길이 250px */
-	        max-width: 62s0px;
+	        max-height: 400px; /* 최대 세로 길이 250px */
+	        max-width: 1020px;
 	    }
 	        /* 박스 사이의 간격을 고정 */
 	    .col-6, .col-md-4, .col-12, .col-md-8 {
@@ -92,39 +100,64 @@
             transform: translateY(0);
         }
         .custom-badge {
-            background-color: rgba(31, 174, 193, 0.53); 
-            color: grey; /* 텍스트 색상 */
+            background-color: #6998AB; 
+            color: white; /* 텍스트 색상 */
             padding: 2px 4px; /* 패딩 조정 */
-            font-size: 10px; /* 글꼴 크기 조정 */
+            font-size: 12px; /* 글꼴 크기 조정 */
+            border-radius: 4px;
+            font-weight: 300;
         }
         .header{
         	text-align: center;
         }
-         @font-face {
-	        font-family: 'Paperlogy-8ExtraBold';
-	        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
-	        font-weight: 800;
-	        font-style: normal;
+	    .header h2 {
+	        font-family: "Noto Sans KR", serif; /* 폰트 적용 */
+	         /* 기울임체 적용 */
+	        font-size: 30px;
+	        padding-bottom: 10px;
 	    }
-	    h2 {
-	        font-family: 'Paperlogy-8ExtraBold', sans-serif; /* 폰트 적용 */
-	        font-style: italic; /* 기울임체 적용 */
-       		 /* 글씨 색상 회색 */
+	    .header p {
+	        font-family: "Noto Sans KR", serif; /* 폰트 적용 */
+	        font-size: 14px;
 	    }
-	    p {
-	        font-family: 'Paperlogy-8ExtraBold', sans-serif; /* 폰트 적용 */
-	        color: gray;
+	    .diarywrite
+	    {
+	    	text-align: right;
+	    	align-content: center;
+	    	padding: 10px 5%;
+	    }
+	    .diarywrite > a
+	    {
+	    	padding : 0 5px;
+	    	text-decoration: none;
+	    	color : black;
+	    }
+	    .bi
+	    {
+	    	font-size: 16px;
+	    }
+	    .header i
+	    {
+	    	font-size: 30px;
+	    	font-weight: 400;
 	    }
     </style>
 </head>
+
 <body>
 <%
     List<Diary> diaryList = (List<Diary>)request.getAttribute("diaryList");
+	HttpSession ssn = request.getSession(false);
 %>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+<div id="body">
 <div class="header">
-	<h2> 저기 어때 ?</h2>
+	<h2><i class="bi bi-book"></i>&nbsp;DIARY</h2>
 	<p> 다른 사람들은 이런 다이어리를 작성했어요 ! </p>
+</div>
+<div class="diarywrite">
+	<a href="/howAbout/diaries/addDiary"><i class="bi bi-pencil-square"></i>&nbsp;작성</a>
+	<a href="/howAbout/diaries/my"><i class="bi bi-book"></i>&nbsp;내 다이어리</a>
 </div>
 
 <div class="container">
@@ -187,7 +220,7 @@
 %>
 </div>
 </div>
-
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // 모든 일반 박스의 높이를 가져옵니다.

@@ -15,7 +15,7 @@
 	//out.print("뷰ㅔㅇ서 num 꺼냈나요 :"+num);
 	//request.setAttribute("num", num);
 %>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <form:form modelAttribute="location" method="post">
 	<form:hidden path="num" name="num" value="<%= lt.getNum() %>"/> 
 	<p>장소명 : <form:input path="data_title" name="data_title" value="<%= lt.getData_title() %>"/> </p>

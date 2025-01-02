@@ -13,7 +13,7 @@
 <%
 	Recommendation recommendation = (Recommendation)request.getAttribute("recommendation");
 %>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <br>
 <p>여행지 추천 수정하기<p>
 

@@ -10,7 +10,7 @@
 <title>로케이션 지역</title>
 </head>
 <body>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <%
 	ArrayList<Location> locationOfArea = (ArrayList<Location>)request.getAttribute("locationOfArea");
 	String area = (String)request.getAttribute("area");

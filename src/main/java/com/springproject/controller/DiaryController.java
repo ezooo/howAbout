@@ -67,11 +67,11 @@ public class DiaryController
 					return "diary/mydiaries";
 				}
 				System.out.println("세션은 있는데 로그인 안됐음");
-				return "redirect:/login";
+				return "redirect:/user/login";
 			}
 		}
 		System.out.println("로그인 안되어있다 : 다이어리 구조만 보여주기");
-		return "redirect:/login";
+		return "redirect:/user/login";
 	}
 
 	@GetMapping("/diary/{diaryId}")
@@ -97,8 +97,7 @@ public class DiaryController
 		{
 			System.out.println("멤버 아니다 로그인하세요");
 			//로그인 안되어있으면 로그인창으로 보내
-			//model.addAttribute("member", new Member());
-			return "redirect:/login";
+			return "redirect:/user/login";
 		}
 		return "diary/addDiary";
 	}
@@ -180,7 +179,7 @@ public class DiaryController
 		diaryService.setNewDiary(diary);	//제출받은거 등록함수에게 주기
 		System.out.println("리파지토리 갔다가 컨트롤러 돌아옴");
 		
-		return "redirect:/diaries/diary/"+diary.getDiaryId() ;
+		return "redirect:/diaries/my";
 	}
 	
 	@GetMapping("/updateDiary")
