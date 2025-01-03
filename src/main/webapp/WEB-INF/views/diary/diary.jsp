@@ -39,8 +39,13 @@ body{
 
     }
     .clickBox {
+<<<<<<< HEAD
 		padding : 10px;
 		width:90%;
+=======
+		padding : 10px 30px;
+		width:100%;
+>>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
         justify-content: flex-start;	 /* 중앙 정렬 */
         max-width : 1200px;
     }
@@ -52,6 +57,7 @@ body{
     	text-decoration: none;
     	font-size: 13px;
     	padding : 5px;
+<<<<<<< HEAD
     	margin : 2px;
     	border : 1px hidden;
     	border-radius: 7px;
@@ -69,6 +75,26 @@ body{
     	margin : 2px;
     	border : 1px hidden;
     	border-radius: 7px;
+=======
+    	margin : 2px;
+    	margin-right:20px;
+    	border : 1px hidden;
+    	border-radius: 7px;
+    	background-color: rgba(247, 166, 89, 0.9); 
+    	color : white;
+    }
+    .clickBox a{
+    	display: inline-block;
+    	width: 60px;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	padding : 5px 15px;
+    	font-size: 13px;
+    	margin : 2px;
+    	border : 1px hidden;
+    	border-radius: 7px;
+>>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
     	background-color: #6998AB; 
     	color : white;
     }
@@ -180,7 +206,12 @@ body{
     <div class="info">
         <p style="font-size: 20px;"><i class="bi bi-calendar-week" style="font-size: 30px;"></i>&nbsp;&nbsp;<%= diary.getVisit_date() %></p>
         <p style="font-size: 20px;"><%= diary.getAddress() %></p>
+<<<<<<< HEAD
         <p>메모 : <%= diary.getVisit_diary() %></p>
+=======
+        <hr>
+        <p><%= diary.getVisit_diary() %></p>
+>>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
 
     </div>
 
@@ -213,7 +244,7 @@ body{
             <% if(diary.getIsopen().equals("true")) { %> 공개글 <% } else { %> 비밀글 <% } %>
         	</span>
 	        <a href="/howAbout/diaries/updateDiary?id=<%=diary.getDiaryId()%>">수정</a>
-	        <a href="/howAbout/diaries/deleteDiary?id=<%=diary.getDiaryId()%>">삭제</a>
+	        <a href="#" onclick="confirmDelete('<%=diary.getDiaryId()%>'); return false;">삭제</a>
 	    </p>
 	<%
 	    }
@@ -225,6 +256,13 @@ body{
     function changeImage(filename) {
         document.getElementById('mainImage').src = '/howAbout/resources/images/' + filename;
     }
+
+    function confirmDelete(diaryId) {
+        if (confirm("다이어리를 삭제하시겠습니까?")) {
+            window.location.href = "/howAbout/diaries/deleteDiary?id=" + diaryId;
+        }
+    }
+
 </script>
 </body>
 </html>
