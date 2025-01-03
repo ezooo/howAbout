@@ -24,27 +24,19 @@ public class ReviewServiceImpl implements ReviewService{
 	public void updateReview(String millisID, String reviewText) { reviewRepository.updateReview(millisID, reviewText); }
 
 	@Override
-	public Review getReviewByMillis(long millis) {
-		System.out.println("getReviewByMillis 서비스 도착");
-		return reviewRepository.getReviewByMillis(millis);
-	}
+	public Review getReviewByMillis(long millis) { return reviewRepository.getReviewByMillis(millis); }
 
 	@Override
-	public List<Review> getReviewById(String userId) {
-		System.out.println("getReviewById 서비스 도착");
-		
-		List<Review> rev_list = reviewRepository.getReviewById(userId);
-		
-		return rev_list;
-	}
-
-
+	public List<Review> getReviewById(String userId) { return reviewRepository.getReviewById(userId); }
 
 	@Override
-	public void deleteReview(long millis) {
-		System.out.println("deleteReview 서비스 도착");
-		reviewRepository.deleteReview(millis);
-	}
+	public void deleteReview(long millis) { reviewRepository.deleteReview(millis); }
+
+	@Override
+	public List<Review> getReviewList() { return reviewRepository.getReviewList(); }
+
+	@Override
+	public List<Review> getReviewList(String keyword) { return reviewRepository.getReviewList(keyword); }
 
 
 

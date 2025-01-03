@@ -1,4 +1,4 @@
- drop database howAbout;
+-- drop database howAbout;
 create database howAbout;
 use howAbout;
 
@@ -15,7 +15,8 @@ create table aboutMember(
     enabled boolean,
     iconName text
 );
-
+select * from aboutMember;
+update aboutMember set enabled=1;
 CREATE TABLE email_tokens (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
@@ -89,7 +90,7 @@ create table if not exists schedule(
     schedule_id bigint primary key,
     schedule_record varchar(50),
     schedule_date date,
-    weather varchar(30)
+    userId varchar(20)
 );
 
 create table if not exists festival(
@@ -163,7 +164,8 @@ create table location
 	 fileurl4 text,
      num int primary key auto_increment -- 순번
 );
-
+select * from location;
+delete from location where insttnm="창원";
 create table recommendation
 (
 	recommendId bigint primary key,

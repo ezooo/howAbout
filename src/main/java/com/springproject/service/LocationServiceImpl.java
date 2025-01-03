@@ -74,14 +74,6 @@ public class LocationServiceImpl implements LocationService
 	}
 
 	@Override
-	public Location findLocation(String[] find) 
-	{
-		System.out.println("LocationServiceImpl findLocation in");
-		Location location = locationRepository.findLocation(find);
-		return location;
-	}
-
-	@Override
 	public void submitUpdateLocation(Location location) 
 	{
 		System.out.println("LocationServiceImpl submitUpdateLocation in");
@@ -89,9 +81,9 @@ public class LocationServiceImpl implements LocationService
 	}
 
 	@Override
-	public void deleteLocation(String lat, String log) 
+	public void deleteLocation(int num) 
 	{
-		locationRepository.deleteLocation(lat, log);
+		locationRepository.deleteLocation(num);
 	}
 
 	@Override

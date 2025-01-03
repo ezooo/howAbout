@@ -35,13 +35,12 @@ public class WeatherCallNow {
 	}
 	
 	
-	static List<WeatherNow>  weatherNowList= new ArrayList<>();
 	
     public static List<WeatherNow> mainCall(String si, String dong) throws Exception {
-    	 LocalDate nowDate = LocalDate.now(); 
+    	 List<WeatherNow> weatherNowList= new ArrayList<>();
+    	 LocalDate nowDate = LocalDate.now();
     	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd"); //date 변환 형식 지정
     	 String date = nowDate.format(formatter); //date 형식 변환한 String
-    	 
     	 
     	 int nowMinute = LocalTime.now().getMinute();
     	 int nowHour = LocalTime.now().getHour();
@@ -127,6 +126,82 @@ public class WeatherCallNow {
          }
          return weatherNowList;
      }
+    public static List<WeatherNow> mainCallByXY(String userNx, String userNy) throws Exception {
+    	List<WeatherNow> weatherNowList= new ArrayList<>();
+    	LocalDate nowDate = LocalDate.now(); 
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd"); //date 변환 형식 지정
+    	String date = nowDate.format(formatter); //date 형식 변환한 String
+    	
+
+    	int nowMinute = LocalTime.now().getMinute();
+    	int nowHour = LocalTime.now().getHour();
+    	if(nowMinute >= 45) {
+    		nowMinute = 30;
+    	}else {
+    		nowMinute = 30;
+    		nowHour = nowHour-1;
+    	}
+    	System.out.println("변환한 minute : " + nowMinute);
+    	// System.out.println("localTime 출력 : "+nowTime);
+    	String time = String.format("%02d%02d", nowHour, nowMinute);
+    	System.out.println("time 출력 : "+time);
+ 
+    	StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"); /*URL*/
+    	urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=WrmKloGjwEzpg3VwrKAyuT8RGfFrbTdSVvzthl5e%2FWL6P5aC2uwyAIssv9jYkPGVewrBzFqweTj%2FNURFqIpr0g%3D%3D"); /*Service Key*/
+    	urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+    	urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
+    	urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
+    	urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*‘21년 6월 28일 발표*/
+    	urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode(time, "UTF-8")); /*06시30분 발표(30분 단위)*/
+    	urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode(userNx, "UTF-8")); /*예보지점 X 좌표값*/
+    	urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode(userNy, "UTF-8")); /*예보지점 Y 좌표값*/
+    	URL url = new URL(urlBuilder.toString());
+    	HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    	conn.setRequestMethod("GET");
+    	conn.setRequestProperty("Content-type", "application/json");
+    	System.out.println("Response code: " + conn.getResponseCode());
+    	BufferedReader rd;
+    	if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+    		rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+    	} else {
+    		rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+    	}
+    	StringBuilder sb = new StringBuilder();
+    	String line;
+    	while ((line = rd.readLine()) != null) {
+    		sb.append(line);
+    	}
+    	rd.close();
+    	conn.disconnect();
+    	System.out.println(sb.toString());
+    	JSONTokener tokener = new JSONTokener(sb.toString());
+    	JSONObject object = new JSONObject(tokener);
+    	System.out.println("object 출력 : " +object.toString());
+    	
+    	JSONObject response = object.getJSONObject("response");
+    	System.out.println("response 출력 : " +response.toString());
+    	JSONObject body = response.getJSONObject("body");
+    	System.out.println("body 출력 : " +body.toString());
+    	JSONObject items = body.getJSONObject("items");
+    	System.out.println("items 출력 : " +items.toString());
+    	JSONArray arr = items.getJSONArray("item");
+    	System.out.println("arr 출력 : " +arr.toString());
+    	for(int i=0; i<arr.length(); i++) {
+    		JSONObject temp = (JSONObject)arr.get(i);
+    		WeatherNow weather = new WeatherNow();
+    		weather.setBaseDate(temp.getString("baseDate"));
+    		weather.setBaseTime(temp.getString("baseTime"));
+    		weather.setCategory(temp.getString("category"));
+    		weather.setFcstDate(temp.getString("fcstDate"));
+    		weather.setFcstTime(temp.getString("fcstTime"));
+    		weather.setFcstValue(temp.getString("fcstValue"));
+    		weather.setNx(String.valueOf(temp.getInt("nx")));
+    		weather.setNy(String.valueOf(temp.getInt("ny")));
+    		weatherNowList.add(weather);
+    		System.out.println("weatherNow add "+i+"번 완료");
+    	}
+    	return weatherNowList;
+    }
     
     public List<WeatherNowByDate> getWeatherByDate(List<WeatherNow> weatherList){
     	//List<WeatherNowByDate>
@@ -214,6 +289,10 @@ public class WeatherCallNow {
     		Map<String, String> innerMap = weatherByDateList.get(i);
     		
     		WeatherNowByDate weatherNowByDate = new WeatherNowByDate();
+    		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    		DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    		LocalDate dateFormat = LocalDate.parse(innerMap.get("fcstDate"), inputFormatter);
+    		String formattedDate = dateFormat.format(outputFormatter);
     		weatherNowByDate.setDate(innerMap.get("date"));
     		weatherNowByDate.setPTY(innerMap.get("PTY"));
     		weatherNowByDate.setRN1(innerMap.get("RN1"));
@@ -221,7 +300,7 @@ public class WeatherCallNow {
     		weatherNowByDate.setSKY(innerMap.get("SKY"));
     		weatherNowByDate.setT1H(innerMap.get("T1H"));
     		weatherNowByDate.setWSD(innerMap.get("WSD"));
-    		weatherNowByDate.setFcstDate(innerMap.get("fcstDate"));
+    		weatherNowByDate.setFcstDate(formattedDate);
     		weatherNowByDate.setFcstTime(innerMap.get("fcstTime"));
     		weatherNowByDateList.add(weatherNowByDate);
     		}

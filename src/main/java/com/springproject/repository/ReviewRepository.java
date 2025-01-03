@@ -18,4 +18,7 @@ public interface ReviewRepository {
 	
 	void deleteReview(long millis);
 	
+	List<Review> getReviewList();
+	List<Review> getReviewList(String keyword);
+	
 }

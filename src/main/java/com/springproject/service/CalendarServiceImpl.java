@@ -1,6 +1,7 @@
 package com.springproject.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ public class CalendarServiceImpl implements CalendarService{
 	public List<Integer> getCalendarDates(int year, int month){
 		System.out.println("getCalendarDates 입장");
 		List<Integer> dates = new ArrayList<>(); //달력에 출력할 날짜 담는 List
-		
+		List<LocalDate> realDate = new ArrayList<>(); //실제 날짜 담는 List
 		LocalDate firstDayOfMonth = LocalDate.of(year, month, 1); //해당 달의 첫 날짜
 		System.out.println("firstDayOfMonth : "+firstDayOfMonth);
 		
@@ -24,10 +25,29 @@ public class CalendarServiceImpl implements CalendarService{
 		for(int i = 0; i<42; i++) {
 			LocalDate currentDate = startDate.plusDays(i);
 			dates.add(currentDate.getDayOfMonth()); //currentDate의 일 부분만 추출해서 추가
+			realDate.add(currentDate);
 		}
 		System.out.println("currentDate 추가 완료 ");
 		return dates;
 	}
+	public List<LocalDate> getRealDates(int year, int month){
+		System.out.println("getRealDates 입장");
+		List<LocalDate> realDates = new ArrayList<>(); //실제 날짜 담는 List
+		LocalDate firstDayOfMonth = LocalDate.of(year, month, 1); //해당 달의 첫 날짜
+		System.out.println("firstDayOfMonth : "+firstDayOfMonth);
+		
+		int firstDayOfWeek= firstDayOfMonth.getDayOfWeek().getValue(); //요일(int)만 추출(월:1 일:7)
+		System.out.println("firstDayOfWeek : "+firstDayOfWeek);
+		LocalDate startDate = firstDayOfMonth.minusDays(firstDayOfWeek % 7);
+		System.out.println("startDate : "+startDate);
+		for(int i = 0; i<42; i++) {
+			LocalDate currentDate = startDate.plusDays(i);
+			realDates.add(currentDate);
+		}
+		System.out.println("currentDate 추가 완료 ");
+		return realDates;
+	}
+	
 	public Map<String, Object> getCalendarYearMonth(Integer year, Integer month) {
 		System.out.println("getCalendarYearMonth 입장");
 		if(year==null||month==null) {

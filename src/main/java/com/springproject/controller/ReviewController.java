@@ -1,6 +1,7 @@
 package com.springproject.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,30 @@ public class ReviewController {
 		} else { result.put("userId", "-----"); }
 
 		return result;
+	}
+	
+	@GetMapping(value={"/usersReviewran", "/usersReviewran/{keyword}"})
+	public String reviewRandomPage(Model model, @PathVariable(required = false) String keyword) {
+		
+		List<Review> list = null;
+		List<Place> placeList = new ArrayList<Place>();
+		
+		if(keyword == null) { list = reviewService.getReviewList(); }
+		else { list = reviewService.getReviewList(keyword); }
+		
+		if(list != null) {
+			
+			for(int i=0; i<list.size(); i++) {
+				Place place = placeService.getApiPlace(list.get(i).getPlaceID());
+				placeList.add(place);
+			}
+			
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("placeList", placeList);
+		
+		return "review/randomReview";
 	}
 	
 	@ResponseBody

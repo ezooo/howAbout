@@ -16,9 +16,8 @@ public interface LocationRepository
 	List<Location> getLocationOfCategory(String category);
 	List<Location> getAllCategory();
 	void createLocation(Location location);
-	Location findLocation(String[] find);
 	void submitUpdateLocation(Location location);
-	void deleteLocation(String lat, String log);
+	void deleteLocation(int num);
 	List<Location> findLocationByTitle(String title);
 	String[] getAPIContents(String jsonaddr);
 	List<String> getAlladdr();

@@ -115,50 +115,49 @@ public class LocationRepositoryImpl implements LocationRepository
 	public void createLocation(Location lt) 
 	{
 		System.out.println("LocationRepositoryImpl createLocation in");
+		String fileurl1 = lt.getFileurl1();
+		System.out.println("fileurl1.isBlank() : "+fileurl1.isBlank() + "fileurl1.isEmpty() : "+fileurl1.isEmpty());
+		if(fileurl1.isBlank()) { fileurl1 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl2 = lt.getFileurl2();
+		if(fileurl2.isBlank()) { fileurl2 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl3 = lt.getFileurl3();
+		if(fileurl3.isBlank()) { fileurl3 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl4 = lt.getFileurl4();
+		if(fileurl4.isBlank()) { fileurl4 ="/howAbout/resources/images/00000000image.png"; }
+		
 		SQL = "insert into location values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		template.update(SQL, lt.getData_title(), lt.getUser_address(), lt.getLatitude(), lt.getLongitude(), lt.getInsttnm(), lt.getCategory_name1(), 
-				lt.getCategory_name2(), lt.getData_content(), lt.getTelno(), lt.getFileurl1(), lt.getFileurl2(), lt.getFileurl3(), lt.getFileurl4(), null);
-	}
-
-	@Override
-	public Location findLocation(String[] find) 
-	{
-		System.out.println("LocationRepositoryImpl findLocation in");
-		String lat = find[0];
-		System.out.println(lat);
-		String log = find[1];
-		
-		SQL = "select * from location where latitude=? and longitude=?";
-		Location location = template.queryForObject(SQL, new LocationRowMapper(), lat, log);
-		if(location != null)
-		{
-			System.out.println("수정할 로케이션 찾아옴");
-			return location;
-		}
-		System.out.println("수정할 로케이션 못찾음....");
-		return null;
+				lt.getCategory_name2(), lt.getData_content(), lt.getTelno(), fileurl1, fileurl2, fileurl3, fileurl4, null);
 	}
 
 	@Override
 	public void submitUpdateLocation(Location lt) 
 	{
 		System.out.println("LocationRepositoryImpl submitUpdateLocation in");
+		String fileurl1 = lt.getFileurl1();
+		if(fileurl1.isBlank()) { fileurl1 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl2 = lt.getFileurl2();
+		if(fileurl2.isBlank()) { fileurl2 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl3 = lt.getFileurl3();
+		if(fileurl3.isBlank()) { fileurl3 ="/howAbout/resources/images/00000000image.png"; }
+		String fileurl4 = lt.getFileurl4();
+		if(fileurl4.isBlank()) { fileurl4 ="/howAbout/resources/images/00000000image.png"; }
+		
 		SQL = "update location set data_title=?, user_address=?, latitude=?, longitude=?, insttnm=?, category_name1=?, category_name2=?,"
 				+ " data_content=?, telno=?, fileurl1=?, fileurl2=?, fileurl3=?, fileurl4=?"
 				+ " where num=?";
 		System.out.println("수정할 제목 : "+lt.getData_title()+", 수정할 카테고리 : "+lt.getCategory_name1()+", 수정할 넘버 : "+lt.getNum());
 		template.update(SQL, lt.getData_title(), lt.getUser_address(), lt.getLatitude(), lt.getLongitude(), lt.getInsttnm(), lt.getCategory_name1(), 
-				lt.getCategory_name2(), lt.getData_content(), lt.getTelno(), lt.getFileurl1(), lt.getFileurl2(), lt.getFileurl3(), lt.getFileurl4(), 
-				lt.getNum());
+				lt.getCategory_name2(), lt.getData_content(), lt.getTelno(), fileurl1, fileurl2, fileurl3, fileurl4, lt.getNum());
 	}
 
 	@Override
-	public void deleteLocation(String lat, String log) 
+	public void deleteLocation(int num) 
 	{
 		System.out.println("LocationRepositoryImpl deleteLocation in");
 		
-		SQL= "delete from location where latitude=? and longitude=?";
-		template.update(SQL, lat, log);
+		SQL= "delete from location where num=?";
+		template.update(SQL, num);
 	}
 
 	@Override

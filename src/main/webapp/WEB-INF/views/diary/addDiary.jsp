@@ -59,11 +59,7 @@
             <div class="mb-3 row">
                 <label for="visit_location" class="col-sm-4 col-form-label">방문 장소</label>
                 <div class="col-sm-8" style="padding-left: 0;">
-<<<<<<< HEAD
-                    <input type="text" class="form-control" name="visit_location" id="visit_location" required />
-=======
                     <input type="text" class="form-control" name="visit_location" id="visit_location" required placeholder="원하는 장소가 검색되지 않으면 직접 입력해주세요."/>
->>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
                     <button id="find" onclick="findLocation()" type="button" class="btn btn-secondary mt-2">장소검색</button>
                 </div>
             </div>
@@ -71,21 +67,13 @@
             <div class="mb-3 row">
                 <label for="address" class="col-sm-4 col-form-label">주   소</label>
                 <div class="col-sm-8" style="padding-left: 0;">
-<<<<<<< HEAD
-                    <input type="text" class="form-control" name="address" id="address" />
-=======
                     <input type="text" class="form-control" name="address" id="address" required/>
->>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="visit_diary" class="col-sm-4 col-form-label">메   모</label>
                 <div class="col-sm-8" style="padding-left: 0;">
-<<<<<<< HEAD
-                    <input type="text" class="form-control" name="visit_diary" />
-=======
                     <input type="text" class="form-control" name="visit_diary" style="height: 200px; padding-top: 0px; line-height: 1;"/>
->>>>>>> f8c883457ef258d8fb686399b6980baf78f98eb1
                 </div>
             </div>
             <div class="mb-3">

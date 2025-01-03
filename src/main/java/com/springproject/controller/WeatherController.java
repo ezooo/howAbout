@@ -80,10 +80,6 @@ public class WeatherController {
 			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getT1H());
 			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getRN1());
 		}
-//		Map<String,Map<String,String>> weatherByDateList =weatherCallNow.getWeatherByDate(weatherNowList);
-//		model.addAttribute("weatherNowByDateList",weatherByDateList);
-//		session.setAttribute("weatherNowByDateList", weatherByDateList);
-//		System.out.println("weatherNowByDateList 출력하기 " + weatherByDateList);
 		return weatherNowByDateList;
 	}
 	@GetMapping("/selectSi")
@@ -93,6 +89,36 @@ public class WeatherController {
 		
 		return dongList;
 	}
+	
+	@GetMapping("/callNow")
+	@ResponseBody
+	public List<WeatherNowByDate> callWeatherNow(Model model, HttpSession session) throws Exception {
+		System.out.println("callWeatherNow 입장");
+		String userNx = "90";
+		String userNy = "77";
+		if(session != null) {
+			Member user = (Member)session.getAttribute("userStatus");
+			if(user != null) {
+				userNx = String.valueOf(user.getNx());
+				userNy = String.valueOf(user.getNy());
+			}
+		}
+		List<WeatherNow> weatherNowList = weatherCallNow.mainCallByXY(userNx, userNy);
+		
+		List<WeatherNowByDate> weatherNowByDateList = weatherCallNow.getWeatherByDate(weatherNowList);
+		model.addAttribute("weatherNowByDateList",weatherNowByDateList);
+		session.setAttribute("weatherNowByDateList", weatherNowByDateList);
+		for(int i=0;i<weatherNowByDateList.size();i++) {
+			WeatherNowByDate oneWeather = weatherNowByDateList.get(i);
+			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getDate());
+			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getFcstDate());
+			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getPTY());
+			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getT1H());
+			System.out.println("하나씩 출력해 보기2 : "+oneWeather.getRN1());
+		}
+		return weatherNowByDateList;
+	}
+	
 	
 	@ResponseBody
 	@GetMapping("/callThree")

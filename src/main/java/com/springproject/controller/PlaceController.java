@@ -71,6 +71,7 @@ public class PlaceController {
 		if(category.equals("음식점")) {
 			
 			if(sub != null &&!(sub.isEmpty())) {
+				System.out.println("도착한 서브 카테고리 "+sub);
 				switch (sub) {
 					case "한식" : serchKey = serchKey + "한식"; break;
 					case "중식" : serchKey = serchKey + "중식"; break;

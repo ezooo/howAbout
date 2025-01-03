@@ -33,7 +33,7 @@ public class LocationController
 	@RequestMapping
 	public String locationin()
 	{
-		return "location/locationPreview";
+		return "location/locationArea";
 	}
 	
 	@RequestMapping("/addapi")
@@ -53,7 +53,7 @@ public class LocationController
 					APIFileWriting afile = new APIFileWriting();
 					//api 요청 할 주소
 					String apiUrl = "http://apis.data.go.kr/6480000/gyeongnamtournature/gyeongnamtournaturelist?"
-						+ "serviceKey=axdk7ixVxHHdRzI6x1lL6%2FCGVvu%2BsCRNby2Z9thO7g6TdPJCowoZhR0q4PDgM59dCD9YX5EcHqKp0T%2BcSJoNXw%3D%3D&numOfRows=50&pageNo=1&resultType=json"; // 호출할 API URL
+						+ "serviceKey=axdk7ixVxHHdRzI6x1lL6%2FCGVvu%2BsCRNby2Z9thO7g6TdPJCowoZhR0q4PDgM59dCD9YX5EcHqKp0T%2BcSJoNXw%3D%3D&numOfRows=50&pageNo=2&resultType=json"; // 호출할 API URL
 						    
 					try 
 				    {
@@ -243,7 +243,7 @@ public class LocationController
 	{
 		System.out.println("장소 추가하기 뷰 이동");
 		
-		return "location/createLocation";
+		return "location/addLocation";
 	}
 	
 	@PostMapping("/create")
@@ -285,10 +285,10 @@ public class LocationController
 	}
 
 	@GetMapping("/delete")
-	public String deleteLocation(@RequestParam("lat") String lat, @RequestParam("log") String log)
+	public String deleteLocation(@RequestParam("num") int num)
 	{
 		System.out.println("LocationController deleteLocation in");
-		locationService.deleteLocation(lat, log);
+		locationService.deleteLocation(num);
 		System.out.println("로케이션 삭제 완료");
 		return "redirect:/location";
 	}

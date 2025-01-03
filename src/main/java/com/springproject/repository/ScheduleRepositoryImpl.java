@@ -5,13 +5,14 @@ import java.sql.Date;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-
+import com.springproject.domain.Member;
 import com.springproject.domain.Schedule;
 @Repository
 public class ScheduleRepositoryImpl {
@@ -24,14 +25,17 @@ public class ScheduleRepositoryImpl {
 		this.template = new JdbcTemplate(dataSource);
 	}
 	
-	public void addSchedule(Schedule schedule) {
+	public void addSchedule(Schedule schedule,HttpSession session) {
 		System.out.println("ScheduleRepository의 addSchedule 실행됨");
 		schedule.setSchedule_id(System.currentTimeMillis());
-		String SQL = "INSERT INTO schedule (schedule_id, schedule_date, schedule_record, weather)"+ "VALUES (?,?,?,?)";
-		template.update(SQL, schedule.getSchedule_id(), schedule.getSchedule_date(), schedule.getSchedule_record(), schedule.getWeather());
+		System.out.println("session member 정보 출력 : "+session.getAttribute("userStatus"));
+		Member member=(Member)session.getAttribute("userStatus");
+		schedule.setUserId(member.getUserId());
+		System.out.println("getuserId 출력 : "+schedule.getUserId());
+		String SQL = "INSERT INTO schedule (schedule_id, schedule_record, schedule_date,  userId)"+ "VALUES (?,?,?,?)";
+		template.update(SQL, schedule.getSchedule_id(), schedule.getSchedule_record(), schedule.getSchedule_date(), schedule.getUserId());
 	}
 	public Schedule getScheduleById(long schedule_id) throws Exception {
-		
 		System.out.println("ScheduleRepository의 getScheduleById 실행됨");
 		String SQL = "SELECT count(*) FROM schedule where schedule_id=?";
 		int rowCount = template.queryForObject(SQL,Integer.class,schedule_id);
@@ -77,12 +81,11 @@ public class ScheduleRepositoryImpl {
 	public void updateSchedule(Schedule schedule) {
 		System.out.println("수정할 date : "+schedule.getSchedule_date());
 		System.out.println("수정할 record : "+schedule.getSchedule_record());
-		System.out.println("수정할 weather : "+schedule.getWeather());
 		System.out.println("수정할 id : "+schedule.getSchedule_id());
 		
 		System.out.println("ScheduleRepository의 updateSchedule 실행됨");
-		String SQL = "UPDATE schedule SET schedule_date=?, schedule_record=?, weather=? where schedule_id=?";
-		template.update(SQL, schedule.getSchedule_date(), schedule.getSchedule_record(), schedule.getWeather(), schedule.getSchedule_id());
+		String SQL = "UPDATE schedule SET schedule_date=?, schedule_record=? where schedule_id=?";
+		template.update(SQL, schedule.getSchedule_date(), schedule.getSchedule_record(), schedule.getSchedule_id());
 	}
 	public void deleteSchedule(long schedule_id) {
 		System.out.println("ScheduleRepository의 deleteSchedule 실행됨");

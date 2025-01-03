@@ -2,6 +2,8 @@ package com.springproject.repository;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -100,6 +102,50 @@ public class ReviewRepositoryImpl implements ReviewRepository{
 		}
 		
 		return rev_list;
+	}
+
+	@Override
+	public List<Review> getReviewList() {
+		
+		List<Review> list = null;
+		
+		sql="select count(*) from aboutReview";
+		int row = temp.queryForObject(sql, Integer.class);
+		
+		if(row != 0) {
+			sql = "select * from aboutReview";
+			list = temp.query(sql, new ReviewRowMapper());
+			
+			if(list.size() > 6) {
+				Collections.shuffle(list);	//리스트를 무작위로 섞섞
+				list = list.subList(0, 6);
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Review> getReviewList(String keyword) {
+		
+		List<Review> list = null;
+		List<Review> random = null;
+		
+		sql="select count(*) from aboutReview where category=?";
+		int row = temp.queryForObject(sql, Integer.class, keyword);
+		
+		if(row != 0) {
+			sql = "select * from aboutReview where category=?";
+			list = temp.query(sql, new ReviewRowMapper(), keyword);
+			
+			if(list.size() > 6) {
+				Collections.shuffle(list);	//리스트를 무작위로 섞섞
+				random = new ArrayList<Review>(list.subList(0, 6));
+			} else { random = list; }
+		}
+		
+		return random;
+		
 	}
 
 

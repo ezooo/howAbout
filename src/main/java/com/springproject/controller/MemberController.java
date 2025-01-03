@@ -72,7 +72,7 @@ public class MemberController{
 	
 	//회원가입 페이지 이동
 	@GetMapping("/joinMember")
-	public String createMemberForm(@ModelAttribute Member member) { return "member/memberAdd"; }
+	public String createMemberForm(@ModelAttribute Member member) { return "member/joinMember"; }
 	
 	@PostMapping("/joinMember")
 	public String createMember(@ModelAttribute Member member, @RequestParam("userIcon") MultipartFile file, HttpServletRequest req) {
@@ -204,7 +204,7 @@ public class MemberController{
 			session.setAttribute("userStatus", member);
 		} else { 
 			redirectAttributes.addFlashAttribute("miss","로그인 실패");
-			home = "redirect:/";
+			home = "redirect:/user/login";
 		}
 		
 		return home;
@@ -271,7 +271,7 @@ public class MemberController{
 
         addUserToModel(response.getBody(), model, req);
 
-        return "redirect:/user/home";
+        return "redirect:/";
     }
 
     // 모델에 사용자 정보를 추가하는 메서드
@@ -407,16 +407,17 @@ public class MemberController{
 	public String readMyPage(HttpServletRequest req, Model model) {
 		
 		Member member = null;
+		String home = "member/myPage";
 		
 		HttpSession session = req.getSession(false);
 		if(session != null) {
 			member = (Member)session.getAttribute("userStatus");
 			if(member != null) {
 				model.addAttribute("member", member);
-			}
-		}
+			} else { home = "redirect:/error/401"; }
+		} else { home = "redirect:/error/401"; }
 
-		return "member/myPage";
+		return home;
 	}
 	
 	@PostMapping("/readOne")

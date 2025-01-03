@@ -9,20 +9,21 @@ public class Schedule {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate schedule_date;
 	private String schedule_record;
-	private String weather;
-	
+	private String userId;
 	public Schedule() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Schedule(long schedule_id, LocalDate schedule_date, String schedule_record, String weather) {
+
+	public Schedule(long schedule_id, LocalDate schedule_date, String schedule_record, String userId) {
 		super();
 		this.schedule_id = schedule_id;
 		this.schedule_date = schedule_date;
 		this.schedule_record = schedule_record;
-		this.weather = weather;
+		this.userId = userId;
 	}
+
 
 	public long getSchedule_id() {
 		return schedule_id;
@@ -48,12 +49,14 @@ public class Schedule {
 		this.schedule_record = schedule_record;
 	}
 
-	public String getWeather() {
-		return weather;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setWeather(String weather) {
-		this.weather = weather;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

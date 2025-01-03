@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로케이션 보여주기</title>
+<title>관광지 전체 보기</title>
 </head>
 <body>
 <jsp:include page="../nav.jsp" flush="false"></jsp:include>

@@ -16,8 +16,7 @@ public class ScheduleRowMapper implements RowMapper<Schedule>{
 		schedule.setSchedule_record(rs.getString(2));
 		Date date = rs.getDate(3);
 		schedule.setSchedule_date(date.toLocalDate());
-		schedule.setWeather(rs.getString(4));
-		
+		schedule.setUserId(rs.getString(4));
 		return schedule;
 	}
 }
