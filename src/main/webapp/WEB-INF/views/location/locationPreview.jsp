@@ -8,8 +8,8 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-<%@ include file="main.jsp" %>
-로케이션 임시페이지 입니다.
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+관광지를 찾아보세요 !
 <a href="/howAbout/location/locations">전체 로케이션 보기</a>
 <a href="/howAbout/location/locationCategory">카테고리 분류 보기</a>
 <a href="/howAbout/location/locationArea">지역 분류 보기</a>

@@ -13,34 +13,40 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>코스 등록</title>
-	<style>
-        #selectionForm {
-            display: none; /* 기본적으로 숨김 */
-        }
-    </style>
 </head>
+<style>
+#selectionForm {
+    display: none; /* 기본적으로 숨김 */
+}
+
+.noto-sans-kr-<uniquifier> {
+	  font-family: "Noto Sans KR", serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+	}
+*{
+	font-family: "Noto Sans KR", serif;
+	font-style: none;
+	text-decoration: none;
+	font-weight : 500;
+}
+#main{
+	background-color : #6998AB;
+}
+#main h1 {
+	font-weight: 600;
+}
+</style>
 <body>
-	<div class="container">
-		<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-		      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"></a>
-		      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-		        <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 link-secondary">Home</a></li>
-		        <li><a href="${pageContext.request.contextPath}/course" class="nav-link px-2 link-dark">Course</a></li>
-		        <li><a href="${pageContext.request.contextPath}/festival" class="nav-link px-2 link-dark">Festival</a></li>
-		        <li><a href="${pageContext.request.contextPath}/location" class="nav-link px-2 link-dark">Location</a></li>
-		        <li><a href="${pageContext.request.contextPath}/schedule" class="nav-link px-2 link-dark">Schedule</a></li>
-		        <li><a href="${pageContext.request.contextPath}/weather" class="nav-link px-2 link-dark">Weather</a></li>
-		      </ul>
-		</header>
-	</div>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 	<div class="container">
 		<div class="py-5 text-center">
 	     
 	      <h2>Course add form</h2>
 	      <p class="lead">추천 코스를 등록해 주세요.</p>
 	    </div>
-	
-		
+	    	
 		<br><br>
 		<div class="row g-5">
 			<div class="col-md-7 col-lg-8">

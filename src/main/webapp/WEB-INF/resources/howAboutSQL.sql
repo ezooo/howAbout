@@ -77,7 +77,7 @@ create table IF NOT EXISTS course(
     userId varchar(20),
     creation_date datetime(3)
 )DEFAULT CHARSET=utf8;
-drop table course;
+
 create table IF NOT EXISTS course_location(
 	course_id bigint,
     location_name varchar(20),
@@ -89,7 +89,7 @@ create table if not exists schedule(
     schedule_id bigint primary key,
     schedule_record varchar(50),
     schedule_date date,
-    weather varchar(30)
+    userId varchar(20)
 );
 
 create table if not exists festival(
@@ -132,9 +132,7 @@ create table if not exists festival_db(
     referenceDate date
 )CHARACTER SET utf8mb4;
 
-insert into festival(fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate)
-select fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate from festival_db
-where rdnmadr like "경상남도%" or lnmadr like "경상남도%";
+
 
 create table if not exists gnLatiInfo(
 	gsndo varchar(4),
@@ -213,3 +211,15 @@ insert into weatherarea values('함안','11H20603');
 insert into weatherarea values('함양','11H20501');
 insert into weatherarea values('합천','11H20503');
 select * from weatherarea;
+select * from aboutmember;
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/weather.csv'
+INTO TABLE gnLatiInfo
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+set si = nullif(si,''),
+	 dongEupMyeon = nullif(dongEupMyeon,'');
+     
+insert into festival(fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate)
+select fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate from festival_db
+where rdnmadr like "경상남도%" or lnmadr like "경상남도%";

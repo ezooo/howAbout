@@ -11,7 +11,7 @@
 <title>로케이션 보여주기</title>
 </head>
 <body>
-<%@ include file="main.jsp" %>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <%
 	ArrayList<Location> locations = (ArrayList<Location>)request.getAttribute("locations");
 %>

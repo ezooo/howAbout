@@ -14,96 +14,128 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>코스 수정</title>
-	<style>
-        #selectionForm {
-            display: none; /* 기본적으로 숨김 */
-        }
-    </style>
 </head>
-<body>
-	<div class="container">
-		<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-		      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"></a>
-		      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-		        <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 link-secondary">Home</a></li>
-		        <li><a href="${pageContext.request.contextPath}/course" class="nav-link px-2 link-dark">Course</a></li>
-		        <li><a href="${pageContext.request.contextPath}/festival" class="nav-link px-2 link-dark">Festival</a></li>
-		        <li><a href="${pageContext.request.contextPath}/location" class="nav-link px-2 link-dark">Location</a></li>
-		        <li><a href="${pageContext.request.contextPath}/schedule" class="nav-link px-2 link-dark">Schedule</a></li>
-		        <li><a href="${pageContext.request.contextPath}/weather" class="nav-link px-2 link-dark">Weather</a></li>
-		      </ul>
-		</header>
-	</div>
+<style>
+.noto-sans-kr-<uniquifier> {
+	  font-family: "Noto Sans KR", serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+	}
+*{
+	font-family: "Noto Sans KR", serif;
+	font-style: none;
+	text-decoration: none;
+	font-weight : 500;
+}
+#selectionForm {
+	width: 100%;
+	position: absolute;
+	top:0;
+	display: none;
+    background-color: rgba(108, 117, 125, 0.4);
+    padding: 50px;
+}
+#selectionFormBox{
+	width: 85%;
+	margin: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center; 
+	background-color: #212529;
+	padding: 50px;
+}
+
+#selectData div{
+	font-size: 20px;
+}
+#listTitle{
+	font-size:40px;
+	font-weight: bolder;
+	color: white;
+	padding: 30px;
+}
+#selectionInnerBox{
+	width: 70%;
+	padding: 50px;
+}
+</style>
+<body style="background-color:rgb(248 249 250);">
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 	
 	<div class="container">
-		<div class="py-5 text-center">
-	     
-	      <h2>Course update form</h2>
-	      <p class="lead">추천 코스를 수정해 주세요.</p>
-	    </div>
-	
 		<br><br>
-		<div class="row g-5">
-			<div class="col-md-7 col-lg-8">
-				<form:form modelAttribute="updateCourse"
-							action="./update"
-				 class="needs-validation"
-				 method="post">
-				<div class="row g-3">
-				<fieldset>
-					<legend class="mb-3">추천 코스 수정</legend>
-					<div class="col-12">
-						<label class="form-label">코스 아이디</label>
+		<div class="row g-5" >
+			<div class="bg-body-tertiary col-md-7 col-lg-8 ">
+				<div class="my-3 p-3">
+					<form:form modelAttribute="updateCourse"
+								action="./update"
+					 class="needs-validation"
+					 method="post">
+					<div class="row g-3 bg-body shadow-sm mx-auto p-5" style="border-radius: 21px 21px 0 0;">
+					<fieldset>
+						<legend class="mb-3 display-5">추천 코스 수정</legend>
 						<div class="col-12">
-							<form:input type="hidden" path="course_id" class="form-control" value="${course.course_id}"/>
+							<div class="col-12">
+								<form:input type="hidden" path="course_id" class="form-control" value="${course.course_id}"/>
+							</div>
 						</div>
-					</div>
-					<div class="col-12">
-						<label class="form-label">유저 아이디</label>
-						<div class="col-sm-3">
-							<form:input type="hidden" path="userId" class="form-control" value="${course.userId}"/>
-						</div>
-					</div>
-					<div class="col-12">
-						<label class="form-label">코스 이름</label>
 						<div class="col-12">
-							<form:input path="course_name" class="form-control" value="${course.course_name}"/>
+							<div class="col-sm-3">
+								<form:input type="hidden" path="userId" class="form-control" value="${course.userId}"/>
+							</div>
 						</div>
+						<div class="col-12 lead m-3">
+							<label class="form-label">코스 이름</label>
+							<div class="col-12">
+								<form:input path="course_name" class="form-control" style="width: 200px;" value="${course.course_name}"/>
+							</div>
+						</div>
+						<div class="col-12 lead my-3">
+							<div class="d-flex justify-content-between" style="width:100%;">
+								<div class="form-label mx-3">장소 이름</div>
+								<div class="mx-5">
+									<input type="button" class="btn btn-secondary" value="위치 추가" style="background-color: #1A374D;" onclick="addInput()"/>
+								</div>
+							</div>
+							<div id="locationContainer" class="col-12">
+								<% Course course = (Course)request.getAttribute("course"); %>
+								<% List<String> list = course.getLocation_names(); %>
+								<% int index; %>
+								<% for(int i = 0; i<list.size(); i++){ %>
+									<% request.setAttribute("index", i); %>
+									<div id="group${index}" class="locationGroup col-12 d-flex align-items-start my-3">
+										<input type="button" class="btn btn-secondary"  style="width: 100px;" value="위치 선택" onclick="openSelect(${index})"/>
+										<form:input path="location_names[${index}]" class="form-control col-md-12 mx-2" style="width:250px;" id="selectedLocation${index}" value="<%=list.get(i)%>"/>
+										<input type="button" class="btn btn-secondary" style="width: 80px;" value="삭제" onclick="deleteSelect(${index})"/>
+									</div>	
+								<% } %>	
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-offset-2 col-sm-10 my-3 text-right">
+								<input type="submit" class="btn btn-primary" value="수정하기" />
+							</div>
+						</div>
+					</fieldset>
 					</div>
-					<div class="col-12">
-						<label class="form-label">장소 이름</label>
-						<div class="col-12 my-3">
-							<input type="button" class="btn btn-secondary" value="위치 추가" onclick="addInput()"/>
-						</div>
-						<div id="locationContainer" class="col-12">
-							<% Course course = (Course)request.getAttribute("course"); %>
-							<% List<String> list = course.getLocation_names(); %>
-							<% int index; %>
-							<% for(int i = 0; i<list.size(); i++){ %>
-								<% request.setAttribute("index", i); %>
-								<div id="group${index}" class="locationGroup col-12 d-flex align-items-center my-3">
-									<input type="button" class="btn btn-secondary"  style="width: 150px;" value="위치 선택" onclick="openSelect(${index})"/>
-									<form:input path="location_names[${index}]" class="form-control col-md-12 mx-2" style="flex-grow: 1;" id="selectedLocation${index}" value="<%=list.get(i)%>"/>
-									<input type="button" class="btn btn-secondary" style="width: 100px;" value="삭제" onclick="deleteSelect(${index})"/>
-								</div>	
-							<% } %>	
-						</div>
-					</div>
-			
-					<div class="form-group row">
-						<div class="col-sm-offset-2 col-sm-10 my-3">
-						<input type="submit" class="btn btn-primary" value="전송" />
-						</div>
-					</div>
-				</fieldset>
+					</form:form>
 				</div>
-				</form:form>
 			</div>
 		</div>
 	</div> 
 	
-	<div id="selectionForm"  class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-		<input type="hidden" name="selectedLocation" id="selectedLocation"/>
+	<div id="selectionForm">
+		<div id="selectionFormBox">
+			<div id="listTitle" style="margin: 5px;">
+			장소 목록
+			</div>
+			<div id="selectionInnerBox" class="bg-body-tertiary shadow-sm mx-auto" style="border: 1px solid #212529; border-radius: 21px 21px 0 0;">
+				<input type="hidden" name="selectedLocation" id="selectedLocation"/>
+				<div id="selectData">
+				</div>
+			</div>
+		</div>
 	</div>
 	<%
 	List<Location> locations = (List<Location>)request.getAttribute("locations");
@@ -117,9 +149,9 @@
 		console.log("locationCount : "+locationCount);
 		newDiv.className='locationGroup col-12 d-flex align-items-center my-3';
 		console.log("locationCount : "+locationCount);
-		newDiv.innerHTML = '<input type="button" class="btn btn-secondary" style="width: 150px;" value="위치 선택" onclick="openSelect('+locationCount+')"/>' +
-        '<input type="text" name="location_names[' + locationCount + ']" class="form-control col-md-12 mx-2" style="flex-grow: 1;" id="selectedLocation'+ locationCount +'"/>'+
-        '<input type="button" class="btn btn-secondary" style="width: 100px;"  value="삭제" onclick="deleteSelect('+locationCount+')"/>';
+		newDiv.innerHTML = '<input type="button" class="btn btn-secondary" style="width: 100px;" value="위치 선택" onclick="openSelect('+locationCount+')"/>' +
+        '<input type="text" name="location_names[' + locationCount + ']" class="form-control col-md-12 mx-2" style="width:250px;" id="selectedLocation'+ locationCount +'"/>'+
+        '<input type="button" class="btn btn-secondary" style="width: 80px;" value="삭제" onclick="deleteSelect('+locationCount+')"/>';
 		document.getElementById('locationContainer').appendChild(newDiv);
 		locationCount++;
 	}
@@ -145,26 +177,27 @@
 		var selectData = document.getElementById('selectData');
 		if(selectData!=null){
 			console.log("selectData가 null이 아님")
-			selectionForm.innerHTML = '';
+			selectionInnerBox.innerHTML = '';
 		}
 		locations.forEach(function(locations){
 			var selectionDiv = document.createElement('div');
 			selectionDiv.id = 'selectData';
-			selectionDiv.innerHTML = '<div class="list-group-item list-group-item-action py-3 lh-tight" style="cursor: pointer; margin: 5px; padding: 10px; border: 1px solid #ccc;" ' +
+			selectionDiv.innerHTML = '<div class="list-group-item list-group-item-action py-3 lh-tight" style="cursor: pointer; margin: 5px; padding: 10px; border-bottom: 1px solid #ccc;" ' +
 		    'onclick="selectLocation(this, \'' + locations.data_title.replace(/'/g, "\\'") + '\')">' +
 		    locations.data_title +
 		    '</div>';
-			document.getElementById('selectionForm').appendChild(selectionDiv);
+			document.getElementById('selectionInnerBox').appendChild(selectionDiv);
 		})
 	}
 	function openSelect(index){
 		console.log("openSelect 실행");
 		currentIndex = index;
 		getSelectList();
-		console.log("getselectList 실행하고왓음")
+		console.log("getselectList 실행하고왓음");
 		document.getElementById("selectionForm").style.display = "block";
 	} 
 	function closeSelect(){
+		console.log("select 닫기");
 		document.getElementById("selectionForm").style.display = "none";
 	}
 	

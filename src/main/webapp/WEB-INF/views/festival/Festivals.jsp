@@ -9,53 +9,72 @@
 <title>Festival</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+<style>
+.noto-sans-kr-<uniquifier> {
+	  font-family: "Noto Sans KR", serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+	}
+*{
+	font-family: "Noto Sans KR", serif;
+	font-style: none;
+	text-decoration: none;
+	font-weight : 500;
+}
+#main{
+	background-color : #6998AB;
+}
+#main h1 {
+	font-weight: 600;
+}
+</style>
 <body>
-	<div class="container">
-		<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-		      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"></a>
-		      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-		        <li><a href="${pageContext.request.contextPath}" class="nav-link px-2 link-secondary">Home</a></li>
-		        <li><a href="${pageContext.request.contextPath}/course" class="nav-link px-2 link-dark">Course</a></li>
-		        <li><a href="${pageContext.request.contextPath}/festival" class="nav-link px-2 link-dark">Festival</a></li>
-		        <li><a href="${pageContext.request.contextPath}/location" class="nav-link px-2 link-dark">Location</a></li>
-		        <li><a href="${pageContext.request.contextPath}/schedule" class="nav-link px-2 link-dark">Schedule</a></li>
-		        <li><a href="${pageContext.request.contextPath}/weather" class="nav-link px-2 link-dark">Weather</a></li>
-		      </ul>
-		</header>
-	</div>
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+<section id="main" class="py-5 text-center">
+    <div class="row py-lg-3">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">축제 목록</h1>
-        <p class="lead text-muted">경상남도에서 개최되는 축제 목록입니다.</p>
+        <h1 class="fw-semibold">축제 목록</h1>
+        <p class="lead text-muted fw-normal">경상남도에서 개최되는 축제 목록입니다.</p>
         <p>
-          <a href="${pageContext.request.contextPath}/festival/add" class="btn btn-primary my-2">festival 추가 &raquo;</a>
+          <a href="${pageContext.request.contextPath}/festival/add" class="btn btn-primary my-2" style="background-color : #1A374D; border: 0;">festival 추가 &raquo;</a>
         </p>
       </div>
     </div>
 </section>
-<div>
+<div class="album py-5 bg-light">
 	<div class="container">
-		<div class="row" align="center">
+		<div class="col-md-10 row col-lg-6 col-md-8 mx-auto mb-5 d-flex align-items-center text-center">
+			<form class="col text-center d-flex align-items-center" action=" ${pageContext.request.contextPath}/festival/month" method="post">
+				<input class="col text-center p-1" style="background-color : white; color: #1A374D; border: 2px solid #1A374D;" name="stringMonth" type="month"/>
+				<input class="col text-center p-2 btn btn-primary m-2" style="background-color : #1A374D; border: 0;" type="submit" value="월별 조회"/>
+			</form>
+			<form class="col text-center d-flex align-items-center text-center" action=" ${pageContext.request.contextPath}/festival/week" method="post">
+				<input class="col text-center p-1" style="background-color : white;  color: #1A374D; border: 2px solid #1A374D;" name="stringDate" type="date"/>
+				<input class="col text-center p-2 btn btn-primary m-2" style="background-color : #1A374D; border: 0;" type="submit" value="주별 조회" />
+			</form>
+		</div>
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 d-flex justify-content-center ">
 			<c:choose>
 				<c:when test="${listOfFestivals.isEmpty()}">
-				<p>등록된 축제가 없습니다.</p>
+				<p class="col text-center">등록된 축제가 없습니다.</p>
 				</c:when>
 				<c:otherwise>
-					<form action=" ${pageContext.request.contextPath}/festival/month" method="post">
-						<input name="stringMonth" type="month"/>
-						<input type="submit" value="선택한 월 조회"/>
-					</form>
-					<form action=" ${pageContext.request.contextPath}/festival/week" method="post">
-						<input name="stringDate" type="date"/>
-						<input type="submit" value="선택한 주 조회" />
-					</form>
 					<c:forEach items="${listOfFestivals}" var="festival">
-						<div class="col-md-4">
-							<h3>개최 기간 : ${festival.fstvlStartDate} - ${festival.fstvlEndDate}</h3>
-							<a href=" ${pageContext.request.contextPath}/festival/festivalNo?fesNo=${festival.fesNo}">축제명 : ${festival.fstvlNm}</a>
-							<p> 개최장소 : ${festival.opar}</p>
-							<p>==========================================================</p>
+						<div class="card shadow-sm mx-3 col-md-3">
+							<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+							<title>Placeholder</title>
+							<rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+							<div class="card-body">
+								<h4>축제명 : ${festival.fstvlNm}</h3>
+				              	<p class="card-text">개최 기간 : ${festival.fstvlStartDate} - ${festival.fstvlEndDate}</p>
+				              	<p> 개최장소 : ${festival.opar}</p>
+					            <div class="d-flex justify-content-between align-items-center">
+					               <div class="btn-group">
+					                  <a type="button" class="btn btn-sm btn-outline-secondary" href=" ${pageContext.request.contextPath}/festival/festivalNo?fesNo=${festival.fesNo}">자세히 보기</a>
+					               </div>
+					            </div>
+				            </div>
 						</div>
 					</c:forEach>
 			</c:otherwise>

@@ -8,41 +8,40 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Yeseva+One&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/d75e97d418.js" crossorigin="anonymous"></script>
 <style type="text/css">
-	.results-container {
-	    max-height: 150px; /* 최대 높이 설정 (원하는 높이로 조정 가능) */
-	    width: 300px;
-	    overflow-y: auto;  /* 세로 스크롤 가능 */
-	    border: 1px solid #ccc; /* 경계선 추가 (선택 사항) */
-	    background-color: #fff; /* 배경색 설정 (선택 사항) */
-	    display: none; /* 초기에는 숨김 */
-	}
 
-	.results-container div {
-	    padding: 8px; /* 각 결과의 패딩 */
-	    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-	}
-
-	.results-container div:hover {
-	    background-color: #f0f0f0; /* 호버 효과 */
+	*
+	{
+		font-family: "Noto Sans KR", serif;
+		font-optical-sizing: auto;
+		font-weight: <weight>;
+		font-style: normal;
 	}
 	
-	#memberAddrForm
+	#backgroundCon
 	{
-		display: flex;
+		position: relative;
+		width: 100%;
+		height: 65vh;
+		background-color: #6998ab;
 	}
-	
-	.formInput
-	{
-		height: 20px;
-	}
+
 
 </style>
 </head>
 <body>
-	<div>
+	<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+	
+	<div class="container" id="backgroundCon"></div>
+	<div id="createDiv">
 		<form:form method="post" modelAttribute="member" enctype="multipart/form-data">
-			<div class="memberInputDiv"><p class="form_tag">유저 이름 </p><form:input class="formInput" path="userName"/></div>
+			<div class="memberInputDiv"><p class="form_tag">닉네임 </p><form:input class="formInput" path="userName"/></div>
 			<div class="memberInputDiv"><p class="form_tag">아이디 </p><form:input class="formInput" id="userId" path="userId"/> <button type="button" id="matchTheID" onclick="sendToController('userId')" >아이디 중복검사</button> </div>
 			<div class="memberInputDiv"><p class="form_tag">비밀번호 </p><form:input class="formInput" path="userPw"/></div>
 			<div class="memberInputDiv"><p class="form_tag">전화번호 </p><form:input class="formInput" path="userTel"/></div>

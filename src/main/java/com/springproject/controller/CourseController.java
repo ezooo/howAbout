@@ -53,7 +53,7 @@ public class CourseController {
 		    }
 		List<Course> list = courseService.getAllCourse();
 		model.addAttribute("listOfCourses", list);
-		return "Courses";
+		return "course/Courses";
 	}
 	@GetMapping("/add")
 	public String requestAddCourseForm(@ModelAttribute("NewCourse") Course NewCourse,
@@ -105,7 +105,7 @@ public class CourseController {
 		model.addAttribute("NewCourse",NewCourse);
 		System.out.println("NewCourse : "+NewCourse);
 		System.out.println("List 있는지 확인 : " + NewCourse.getLocation_names().isEmpty());
-		return "addCourse";
+		return "course/addCourse";
 	}
 	@GetMapping("/selectLocation")
 	@ResponseBody
@@ -157,7 +157,7 @@ public class CourseController {
 		System.out.println("submitId : "+ submitId);
 		List<Course> courseFindById = courseService.getCourseFindById(submitId);
 		model.addAttribute("courseFindById", courseFindById);
-		return "Course";
+		return "course/Course";
 	}
 	@GetMapping("/update")
 	public String requestUpdateCourseForm(@ModelAttribute("updateCourse") Course course,
@@ -169,7 +169,7 @@ public class CourseController {
 		Course courseByCourseId = courseService.getOneCourse(course_id);
 		model.addAttribute("course", courseByCourseId);
 
-		return "updateCourse";
+		return "course/updateCourse";
 	}
 	@PostMapping("/update")
 	public String submitUpdateCourse(@ModelAttribute("updateCourse") Course course) throws Exception {

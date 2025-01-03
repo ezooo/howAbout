@@ -3,6 +3,8 @@ package com.springproject.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public Schedule getScheduleById(long schedule_id) {
+	public Schedule getScheduleById(long schedule_id) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return scheduleRepository.getScheduleById(schedule_id);
 	}
 
 	@Override
@@ -37,9 +39,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public void addSchedule(Schedule schedule) {
-		scheduleRepository.addSchedule(schedule);
-
+	public void addSchedule(Schedule schedule, HttpSession session) {
+		System.out.println("ScheduleService의 addSchedule실행");
+		scheduleRepository.addSchedule(schedule, session);
 	}
 
 	@Override
@@ -53,5 +55,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 		scheduleRepository.deleteSchedule(schedule_id);
 
 	}
+
 
 }

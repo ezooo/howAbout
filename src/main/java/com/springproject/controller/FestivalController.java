@@ -33,7 +33,7 @@ public class FestivalController {
 		List<Festival> list = festivalService.getAllFestival();
 		model.addAttribute("listOfFestivals", list);
 		System.out.println(list.isEmpty());
-		return "Festivals";
+		return "festival/Festivals";
 	}
 	@PostMapping("/month")
 	public String requestGetFestivalByMonth(@RequestParam("stringMonth") String stringMonth, Model model) {
@@ -46,7 +46,7 @@ public class FestivalController {
 		List<Festival> list = festivalService.getFestivalByMonth(date);
 		model.addAttribute("listOfFestivals", list);
 		System.out.println(list.isEmpty());
-		return "Festivals";
+		return "festival/Festivals";
 	}
 	@PostMapping("/week")
 	public String requestGetFestivalByWeek(@RequestParam("stringDate") String stringDate, Model model) {
@@ -54,19 +54,19 @@ public class FestivalController {
 		Date date = Date.valueOf(stringDate);
 		List<Festival> list = festivalService.getFestivalByWeek(date);
 		model.addAttribute("listOfFestivals", list);
-		return "Festivals";
+		return "festival/Festivals";
 	}
 	@GetMapping("/festivalNo")
 	public String requestGetFestivalByNo(@RequestParam("fesNo") long fesNo, Model model) throws Exception {
 		System.out.println("requestGetFestivalByNo 실행됨");
 		Festival festivalByNo = festivalService.getFestivalByNo(fesNo);
 		model.addAttribute("festival", festivalByNo);
-		return "Festival";
+		return "festival/Festival";
 	}
 	@GetMapping("/add")
 	public String requestAddFestivalForm(@ModelAttribute("NewFestival") Festival NewFestival) {
 		System.out.println("requestAddFestivalform 실행됨");
-		return "addFestival";
+		return "festival/addFestival";
 	}
 	@PostMapping("/add")
 	public String submitAddFestival(@ModelAttribute("NewFestival") Festival festival) {
@@ -92,7 +92,7 @@ public class FestivalController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "updateFestival";
+		return "festival/updateFestival";
 	}
 	@PostMapping("/update")
 	public String submitUpdateFestival(@ModelAttribute("updateFestival") Festival festival) {

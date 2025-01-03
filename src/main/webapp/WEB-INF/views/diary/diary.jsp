@@ -8,14 +8,26 @@
 <head>
 <meta charset="UTF-8">
 <title>다이어리 확인하기</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box; /* 박스 모델을 border-box로 설정하여 패딩과 테두리가 너비에 포함되도록 */
-		text-decoration: none;
-    }
-    body {
+.noto-sans-kr-<uniquifier> {
+	  font-family: "Noto Sans KR", serif;
+	  font-optical-sizing: auto;
+	  font-weight: <weight>;
+	  font-style: normal;
+	}
+*{
+	margin : 0 auto;
+	padding : 0px;
+	box-sizing: border-box;
+	text-decoration: none;
+}
+body{
+	width : 100%;
+}
+    #body {
     
         padding: 20px;
         width: 100%;
@@ -23,30 +35,45 @@
     .container {
     	margin: 0 auto; /* 중앙 정렬 */
         display: flex;
-        width: 70%; /* 원하는 너비로 설정 */
         justify-content: center;	 /* 중앙 정렬 */
-        max-width : 1200px;
+
     }
     .clickBox {
-    	margin: 0 auto; /* 중앙 정렬 */
-		padding : 10px 0;
-        width: 70%; /* 원하는 너비로 설정 */
-        justify-content: center;	 /* 중앙 정렬 */
+		padding : 10px;
+		width:90%;
+        justify-content: flex-start;	 /* 중앙 정렬 */
         max-width : 1200px;
     }
-    
-    .clickBox a{
-    	padding : 5px 15px;
-    	font-size: 12px;
+    .clickBox span{
+    	display: inline-block;
+    	width: 60px;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	font-size: 13px;
+    	padding : 5px;
     	margin : 2px;
     	border : 1px hidden;
     	border-radius: 7px;
-    	background-color: rgba(31, 174, 193, 0.53); 
-    	color : black;
+    	background-color: rgba(247, 166, 89, 0.9); 
+    	color : white;
+    }
+    .clickBox a{
+    	display: inline-block;
+    	width: 60px;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	padding : 5px 15px;
+    	font-size: 13px;
+    	margin : 2px;
+    	border : 1px hidden;
+    	border-radius: 7px;
+    	background-color: #6998AB; 
+    	color : white;
     }
     .clickBox a:hover {
         background-color: rgba(39, 118, 221, 0.5);
-        color : white;
         transition: 0.5s ease;
     }
     
@@ -54,8 +81,8 @@
         flex: 0 0 40%; /* 텍스트 영역 40% */
         margin: 10px;
         border : 1px hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
-        padding : 10px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+        padding : 30px;
     }
     .album {
         flex: 0 0 60%; /* 앨범 영역 60% */
@@ -67,7 +94,7 @@
     .main-image {
         width: 100%; /* 대표 이미지 영역 */
         height: auto; /* 자동 높이 */
-        margin-bottom: 10px; /* 아래 여백 */
+        margin-bottom: 20px; /* 아래 여백 */
 		border : 1px hidden;
         box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
     }
@@ -76,6 +103,7 @@
         grid-template-columns: repeat(4, 1fr); /* 4개의 열로 구성 */
         gap: 10px;
         width: 100%; /* 전체 너비 */
+        
     }
     .thumbnail {
 	    width: 100%; /* 부모의 너비를 100%로 설정 */
@@ -83,6 +111,7 @@
 	    position: relative; /* 자식 요소에 대한 상대적 위치 설정 */
 	    overflow: hidden; /* 내용이 영역을 벗어나지 않도록 설정 */
 	    cursor: pointer; /* 클릭 가능 커서 */
+	    border-radius: 5px;
 	}
 	.thumbnail img {
 	    position: absolute; /* 절대 위치 지정 */
@@ -96,25 +125,63 @@
     .thumbnail img:hover {
         transform: scale(1.5); /* 마우스 오버 시 확대 */
     }
+            .header{
+        	text-align: center;
+        }
+	    .header h2 {
+	        font-family: "Noto Sans KR", serif; /* 폰트 적용 */
+	         /* 기울임체 적용 */
+	        font-size: 20px;
+	        padding-bottom: 10px;
+	    }
+	    .diarywrite
+	    {
+	    	text-align: right;
+	    	align-content: center;
+	    	padding: 10px 5%;
+	    	width: 90%;
+	    }
+	    .diarywrite > a
+	    {
+	    	padding : 0 5px;
+	    	text-decoration: none;
+	    	color : black;
+	    }
+	    .bi
+	    {
+	    	font-size: 16px;
+	    }
+	    .header i
+	    {
+	    	font-size: 30px;
+	    	font-weight: 400;
+	    }
 </style>
 </head>
 <body>
+<jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <%
     Diary diary = (Diary)request.getAttribute("diary");
     HttpSession ssn = request.getSession(false);
     String[] filenames = {diary.getFilename0(), diary.getFilename1(), diary.getFilename2(), diary.getFilename3()};
     String mainImage = filenames[0]; // 기본적으로 첫 번째 이미지를 대표 이미지로 설정
 %>
-<%@ include file="main.jsp" %>
+<div id="body">
+<div class="header">
+	<h2><i class="bi bi-tree"></i>&nbsp;
+		<span style="font-size: 30px;"><%= diary.getVisit_location() %></span>&nbsp;&nbsp;방문 기록&nbsp;<i class="bi bi-tree-fill"></i>
+	</h2>
+</div>
+<div class="diarywrite">
+	<a href="/howAbout/diaries/my"><i class="bi bi-book"></i>&nbsp;내 다이어리</a>
+	<a href="/howAbout/diaries"><i class="bi bi-book"></i>&nbsp;다이어리 홈으로</a>
+</div>
 <div class="container">
     <div class="info">
-        <p>방문일 : <%= diary.getVisit_date() %></p>
-        <p>방문장소 : <%= diary.getVisit_location() %></p>
-        <p><%= diary.getAddress() %></p>
+        <p style="font-size: 20px;"><i class="bi bi-calendar-week" style="font-size: 30px;"></i>&nbsp;&nbsp;<%= diary.getVisit_date() %></p>
+        <p style="font-size: 20px;"><%= diary.getAddress() %></p>
         <p>메모 : <%= diary.getVisit_diary() %></p>
-        <p>
-            <% if(diary.getIsopen().equals("true")) { %> 공개 <% } else { %> 비공개 <% } %>
-        </p>
+
     </div>
 
     <div class="album">
@@ -138,10 +205,13 @@
 <div class="clickBox">
 	<%
 	if(ssn != null) {
-	    Member mb = (Member)ssn.getAttribute("member");
+	    Member mb = (Member)ssn.getAttribute("userStatus");
 	    if(mb != null && mb.getUserId().equals(diary.getUserId())) {
 	%>
 	    <p>
+	        <span>
+            <% if(diary.getIsopen().equals("true")) { %> 공개글 <% } else { %> 비밀글 <% } %>
+        	</span>
 	        <a href="/howAbout/diaries/updateDiary?id=<%=diary.getDiaryId()%>">수정</a>
 	        <a href="/howAbout/diaries/deleteDiary?id=<%=diary.getDiaryId()%>">삭제</a>
 	    </p>
@@ -150,7 +220,7 @@
 	}
 	%>
 </div>
-
+</div>
 <script>
     function changeImage(filename) {
         document.getElementById('mainImage').src = '/howAbout/resources/images/' + filename;
