@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 	.results-container {
 	    max-height: 150px; /* 최대 높이 설정 (원하는 높이로 조정 가능) */

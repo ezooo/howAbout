@@ -155,7 +155,7 @@ body{
                 </div>
             </div>
             <div class="text-center">
-                <input type="submit" class="btn btn-primary" value="수정하기">
+                <input type="submit" class="btn btn-primary" value="제출" style="background-color : #6998AB; border : hidden;" />
             </div>
         </form>
     </div>

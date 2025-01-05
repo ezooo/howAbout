@@ -150,7 +150,7 @@ body{
                 </div>
             </div>
             <div class="text-center">
-                <input type="submit" class="btn btn-primary" value="저장">
+                <input type="submit" class="btn btn-primary" value="저장" style="background-color :#6998AB; border : hidden;" />
             </div>
         </form>
     </div>

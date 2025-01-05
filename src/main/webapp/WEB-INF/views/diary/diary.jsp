@@ -58,7 +58,19 @@ body{
     	background-color: rgba(247, 166, 89, 0.9); 
     	color : white;
     }
+	.clickBox div{
+    	display: inline-block;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	font-size: 16px;
+    	padding : 5px 10px;
+    	margin : 2px -40px 0;
+    	border : 1px hidden;
 
+    	background-color: #6998ab; 
+    	color : white;
+    }
     .clickBox a{
     	display: inline-block;
     	width: 60px;
@@ -157,6 +169,49 @@ body{
 	    	font-size: 30px;
 	    	font-weight: 400;
 	    }
+	    
+        #customConfirm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #ccc;
+            border-radius:5px;
+            padding: 50px 80px 30px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .clickBoxx a{
+    	display: inline-block;
+    	width: 60px;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	padding : 5px 15px;
+    	font-size: 13px;
+    	margin : 20px 10px;
+    	border : 1px hidden;
+    	border-radius: 7px;
+    	background-color: #6998AB; 
+    	color : white;
+    }
+    .clickBoxx a:hover {
+        background-color: orange;
+        transition: 0.5s ease;
+    }
 </style>
 </head>
 <body>
@@ -219,9 +274,29 @@ body{
 	    </p>
 	<%
 	    }
+	    else
+	    {
+	%>	
+		<div><%= diary.getUserId() %> &nbsp;님이 작성했어요 ! </div>
+	<%
+	    }
 	}
+    else
+    {
+	%>	
+	<div><%= diary.getUserId() %> &nbsp;님이 작성했어요 !</div>
+	<%
+    }
 	%>
 </div>
+</div>
+<div id="overlay"></div>
+<div id="customConfirm">
+    <p>다이어리를 삭제하시겠습니까?</p>
+    <div class="clickBoxx">
+        <a href="#" onclick="confirmAction(true)">확인</a>
+        <a href="#" onclick="confirmAction(false)">취소</a>
+    </div>
 </div>
 <script>
     function changeImage(filename) {
@@ -229,8 +304,16 @@ body{
     }
 
     function confirmDelete(diaryId) {
-        if (confirm("다이어리를 삭제하시겠습니까?")) {
-            window.location.href = "/howAbout/diaries/deleteDiary?id=" + diaryId;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('customConfirm').style.display = 'block';
+
+        window.confirmAction = function(confirmed) {
+            if (confirmed) {
+                window.location.href = "/howAbout/diaries/deleteDiary?id=" + diaryId;
+            }
+            // 숨기기
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('customConfirm').style.display = 'none';
         }
     }
 

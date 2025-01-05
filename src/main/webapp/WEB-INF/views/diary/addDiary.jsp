@@ -93,7 +93,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <input type="submit" class="btn btn-primary" value="제출" />
+                <input type="submit" class="btn btn-primary" value="제출" style="background-color : #6998AB" />
             </div>
         </form>
     </div>
