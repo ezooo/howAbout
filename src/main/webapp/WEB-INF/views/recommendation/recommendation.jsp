@@ -47,6 +47,24 @@ body {
 }
 .recommend-content {
     line-height: 1.5; /* 추천 내용 줄 간격 조정 */
+    display: flex;
+	padding : 0;
+    width:100%;
+	border : hidden;
+}
+.spantitle
+{
+	width: 20%;
+	background-color : grey;
+	display: inline-block;
+	text-align: center;
+	border : hidden;
+}
+.spancontent
+{
+	display: inline-block;
+	width: 80%;
+	border : hidden;
 }
 .clickBox {
     padding: 10px 30px;
@@ -72,22 +90,22 @@ body {
     background-color: rgba(39, 118, 221, 0.5);
     transition: 0.5s ease;
 }
-	    .boardnav
-	    {
-	    	text-align: right;
-	    	align-content: center;
-	    	padding: 10px 5%;
-	    }
-	    .boardnav > a
-	    {
-	    	padding : 0 5px;
-	    	text-decoration: none;
-	    	color : black;
-	    }
-	    .bi
-	    {
-	    	font-size: 16px;
-	    }
+    .boardnav
+    {
+    	text-align: right;
+    	align-content: center;
+    	padding: 10px 5%;
+    }
+    .boardnav > a
+    {
+    	padding : 0 5px;
+    	text-decoration: none;
+    	color : black;
+    }
+    .bi
+    {
+    	font-size: 16px;
+    }
 </style>
 </head>
 
@@ -105,11 +123,11 @@ body {
 		<a href="/howAbout/recommend">&nbsp;전체보기</a>
 	</div>
     <div class="container mt-5">
-        <p>제 목 : <span class="recommend-title"><%= recommendation.getRecommendTitle() %></span></p>
-        <p>작성자 : <span><%= recommendation.getUserId() %></span></p>
-        <p>작성일 : <span><%= recommendation.getRecommendDate() %></span></p>
-        <hr>
-        <p>추천 내용 : <span class="recommend-content"><%= recommendation.getRecommendContent() %></span></p>
+        <div class="recommend-content"><span class="spantitle">추천 장소</span><span class="spancontent"><%= recommendation.getRecommendTitle() %></span></div>
+        <div class="recommend-content"><span class="spantitle">작성자</span><span class="spancontent"><%= recommendation.getUserId() %></span></div>
+        <div class="recommend-content"><span class="spantitle">작성일</span><span class="spancontent"><%= recommendation.getRecommendDate() %></span></div>
+        <br>
+        <div class="recommend-content"><span class="spantitle">추천 내용 </span><span class="spancontent"><%= recommendation.getRecommendContent() %></span></div>
         <div class="clickBox">
             <a href="/howAbout/recommend/update/<%=recommendation.getRecommendId()%>">수정</a> 
             <a href="/howAbout/recommend/delete/<%=recommendation.getRecommendId()%>">삭제</a>
