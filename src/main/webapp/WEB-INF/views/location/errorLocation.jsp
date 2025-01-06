@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>전체 로케이션 보여주기 에러</title>
+<title>Location</title>
 </head>
 <body>
 <jsp:include page="../nav.jsp" flush="false"></jsp:include>

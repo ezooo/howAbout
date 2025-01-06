@@ -1,12 +1,8 @@
 package com.springproject.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.springproject.domain.Recommendation;
 import com.springproject.repository.RecommendationRepository;
 
@@ -53,6 +49,18 @@ public class RecommendationServiceImpl implements RecommendationService
 	{
 		System.out.println("RecommendationServiceImpl deleteRecommend in");
 		recommendationRepository.deleteRecommend(recommendId);
+	}
+
+	@Override
+	public List<Recommendation> getMyRecommend(String userId) 
+	{
+		return recommendationRepository.getMyRecommend(userId);
+	}
+
+	@Override
+	public void setStatus(String recommendId, String status) 
+	{
+		recommendationRepository.setStatus(recommendId, status);
 	}
 
 

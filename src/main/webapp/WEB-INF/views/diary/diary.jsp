@@ -46,13 +46,12 @@ body{
     }
     .clickBox span{
     	display: inline-block;
-    	width: 60px;
+    	width: 70px;
     	text-align:center;
     	align-content:center;
     	text-decoration: none;
-    	font-size: 13px;
     	padding : 5px;
-    	margin : 2px 2px 10px;
+    	margin : 2px 20px 2px -30px;
     	border : 1px hidden;
     	border-radius: 7px;
     	background-color: rgba(247, 166, 89, 0.9); 
@@ -73,18 +72,21 @@ body{
     }
     .clickBox a{
     	display: inline-block;
-    	width: 60px;
+    	width: 70px;
     	text-align:center;
     	align-content:center;
     	text-decoration: none;
     	padding : 5px 15px;
-    	font-size: 13px;
     	margin : 2px;
     	border : 1px hidden;
     	border-radius: 7px;
     	background-color: #6998AB; 
     	color : white;
     }
+.clickBox .delete
+{	
+	background-color:#D9534F;
+}
     .clickBox a:hover {
         background-color: rgba(39, 118, 221, 0.5);
         transition: 0.5s ease;
@@ -147,14 +149,14 @@ body{
 	        font-size: 20px;
 	        padding-bottom: 10px;
 	    }
-	    .diarywrite
+	    .diaryNav
 	    {
 	    	text-align: right;
 	    	align-content: center;
 	    	padding: 10px 5%;
 	    	width: 90%;
 	    }
-	    .diarywrite > a
+	    .diaryNav > a
 	    {
 	    	padding : 0 5px;
 	    	text-decoration: none;
@@ -196,18 +198,18 @@ body{
         }
         .clickBoxx a{
     	display: inline-block;
-    	width: 60px;
+    	width: 70px;
     	text-align:center;
     	align-content:center;
     	text-decoration: none;
     	padding : 5px 15px;
-    	font-size: 13px;
     	margin : 20px 10px;
     	border : 1px hidden;
     	border-radius: 7px;
     	background-color: #6998AB; 
     	color : white;
     }
+    
     .clickBoxx a:hover {
         background-color: orange;
         transition: 0.5s ease;
@@ -228,7 +230,7 @@ body{
 		<span style="font-size: 30px;"><%= diary.getVisit_location() %></span>&nbsp;&nbsp;방문 기록&nbsp;<i class="bi bi-tree-fill"></i>
 	</h2>
 </div>
-<div class="diarywrite">
+<div class="diaryNav">
 	<a href="/howAbout/diaries/my"><i class="bi bi-book"></i>&nbsp;내 다이어리</a>
 	<a href="/howAbout/diaries"><i class="bi bi-book"></i>&nbsp;다이어리 홈으로</a>
 </div>
@@ -238,7 +240,8 @@ body{
         <p style="font-size: 20px;"><%= diary.getAddress() %></p>
 
         <hr>
-        <p><%= diary.getVisit_diary() %></p>
+        <% String content = diary.getVisit_diary().replace("\n", "<br>"); %>
+        <p><%= content %></p>
     </div>
 
     <div class="album">
@@ -270,7 +273,7 @@ body{
             <% if(diary.getIsopen().equals("true")) { %> 공개글 <% } else { %> 비밀글 <% } %>
         	</span>
 	        <a href="/howAbout/diaries/updateDiary?id=<%=diary.getDiaryId()%>">수정</a>
-	        <a href="#" onclick="confirmDelete('<%=diary.getDiaryId()%>'); return false;">삭제</a>
+	        <a href="#" onclick="confirmDelete('<%=diary.getDiaryId()%>'); return false;" class="delete">삭제</a>
 	    </p>
 	<%
 	    }

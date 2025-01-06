@@ -12,4 +12,6 @@ public interface RecommendationRepository
 	Recommendation getRecommend(long recommendId);
 	void updateRecommend(Recommendation recommendation);
 	void deleteRecommend(long recommendId);
+	List<Recommendation> getMyRecommend(String userId);
+	void setStatus(String recommendId, String status);
 }

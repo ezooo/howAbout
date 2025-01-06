@@ -1,23 +1,21 @@
 package com.springproject.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.springproject.domain.Diary;
 import com.springproject.domain.Member;
 import com.springproject.domain.Recommendation;
@@ -29,17 +27,44 @@ public class RecommendationController
 {
 	@Autowired
 	RecommendationService recommendationService;
-		
-	//2. 일단 모든 추천글 보기 함수 만들기  READ
+
 	@RequestMapping
 	public String getAllRecommend(Model model)
-	{								//6.
+	{
 		System.out.println("RecommendationController getAllRecommend in");
 		List<Recommendation> recommendationList = recommendationService.getAllRecommend();
 		
 		model.addAttribute("recommendationList", recommendationList);
 		
 		return "recommendation/recommendations";	//2. 이동할 뷰까지 작성해놓기
+	}
+	
+	@GetMapping("/my")
+	public String getMyRecommend(Model model, HttpServletRequest request)
+	{
+		System.out.println("RecommendationController getMyRecommend in");
+		String sessionid;
+		if(request.getSession(false) != null)
+		{
+			sessionid = request.getSession(false).getId();
+			if(sessionid != null)
+			{
+				Member mb = (Member) request.getSession(false).getAttribute("userStatus");
+				if(mb !=  null)
+				{
+					String userId = mb.getUserId();
+					System.out.println("로그인 한 유저 아이디는 : "+userId);
+					List<Recommendation> recommendationList = recommendationService.getMyRecommend(userId);
+					
+					model.addAttribute("recommendationList", recommendationList);
+					return "recommendation/myRecommend";
+				}
+				System.out.println("세션은 있는데 로그인 안됐음");
+				return "redirect:/user/login";
+			}
+		}
+		System.out.println("로그인 안되어있다 : 다이어리 구조만 보여주기");
+		return "redirect:/user/login";
 	}
 	
 	// CREATE
@@ -73,6 +98,7 @@ public class RecommendationController
 		Member mb = (Member)req.getSession().getAttribute("userStatus");
 		recommendation.setUserId(mb.getUserId());
 		recommendation.setRecommendId(System.currentTimeMillis());
+		recommendation.setStatus("미확인");
 		recommendationService.addRecommend(recommendation);
 		
 		return "redirect:/recommend";
@@ -132,5 +158,19 @@ public class RecommendationController
 		recommendationService.deleteRecommend(recommendId);
 		
 		return "redirect:/recommend";
+	}
+	
+	@PostMapping("/setStatus")
+	public ResponseEntity<String> setStatus(@RequestBody String jsonString) throws Exception
+	{
+		System.out.println("RecommendationController setStatus  in");
+        // JSON 파싱
+        JSONObject jsonObject = new JSONObject(jsonString);
+        String recommendId = jsonObject.getString("recommendId"); // recommendId 추출
+        String status = jsonObject.getString("status"); // status 추출
+        recommendationService.setStatus(recommendId, status);
+        System.out.println("컨트롤러 setStatus 완료");
+        // 성공 응답 반환
+        return ResponseEntity.ok("{\"message\": \"상태 업데이트 성공\"}");
 	}
 }

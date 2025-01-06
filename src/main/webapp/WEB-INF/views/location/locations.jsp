@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관광지 전체 보기</title>
+<title>Location</title>
 </head>
 <body>
 <jsp:include page="../nav.jsp" flush="false"></jsp:include>
@@ -24,7 +24,7 @@
 %>
 <%	//String title = URLEncoder.encode(lt.getData_title(),"UTF-8").replace("+", "%20");	//한글을 파라미터로 주기 위해 인코딩 %>
 <p><a href="/howAbout/location/onelocation/<%= lt.getNum() %>"> <%= lt.getData_title() %> </a></p>
-<img alt="사진없당" src="<%= lt.getFileurl1() %>" />
+<img alt="image" src="<%= lt.getFileurl1() %>" />
 <hr>
 <%
 	}

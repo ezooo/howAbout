@@ -49,8 +49,9 @@ public class RecommendationRepositoryImpl implements RecommendationRepository
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH:mm");
         rd.setRecommendDate(today.format(formatter));
 		
-		SQL = "insert into recommendation values(?,?,?,?,?)";
-		template.update(SQL, rd.getRecommendId(), rd.getUserId(), rd.getRecommendTitle(), rd.getRecommendContent(), rd.getRecommendDate());
+		SQL = "insert into recommendation values(?,?,?,?,?,?,?,?)";
+		template.update(SQL, rd.getRecommendId(), rd.getUserId(), rd.getRecommendTitle(), rd.getRecommendContent(), rd.getRecommendDate(),
+				rd.getCategory(), rd.getArea(), rd.getStatus());
 		System.out.println("addRecommend 완료");
 	}
 
@@ -71,7 +72,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository
 			{
 				System.out.println("찾아올 레코드가 존재합니다.");
 				SQL = "select * from recommendation where recommendId=?";
-				recommendation = template.queryForObject(SQL, new Object[] {recommendId}, new RecommendationRowMapper());
+				recommendation = template.queryForObject(SQL, new RecommendationRowMapper(), recommendId);
 			}
 		}
 		catch(Exception e)
@@ -84,11 +85,11 @@ public class RecommendationRepositoryImpl implements RecommendationRepository
 
 	
 	@Override
-	public void updateRecommend(Recommendation recommendation) 
+	public void updateRecommend(Recommendation rd) 
 	{
 		System.out.println("RecommendationRepositoryImpl updateRecommend in");
-		SQL = "update recommendation set recommendTitle=?, recommendContent=? where recommendId=?";
-		template.update(SQL, recommendation.getRecommendTitle(), recommendation.getRecommendContent(), recommendation.getRecommendId());
+		SQL = "update recommendation set recommendTitle=?, recommendContent=?, category=?, area=? where recommendId=?";
+		template.update(SQL, rd.getRecommendTitle(), rd.getRecommendContent(), rd.getCategory(), rd.getArea(), rd.getRecommendId());
 	}
 
 	@Override
@@ -97,6 +98,24 @@ public class RecommendationRepositoryImpl implements RecommendationRepository
 		System.out.println("RecommendationRepositoryImpl deleteRecommend in");
 		SQL = "delete from recommendation where recommendId=?";
 		template.update(SQL, recommendId);
+	}
+
+	@Override
+	public List<Recommendation> getMyRecommend(String userId) 
+	{
+		System.out.println("RecommendationRepositoryImpl getMyRecommend in");
+		SQL = "select * from recommendation where userId=?";
+		List<Recommendation> rdList = template.query(SQL, new RecommendationRowMapper(), userId);
+		return rdList;
+	}
+
+	@Override
+	public void setStatus(String recommendId, String status) 
+	{
+		System.out.println("RecommendationRepositoryImpl setStatus in");
+		SQL = "update recommendation set status=? where recommendId=?";
+		template.update(SQL, status, recommendId);
+		
 	}
 
 }

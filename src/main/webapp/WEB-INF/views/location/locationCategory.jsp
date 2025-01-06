@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>로케이션 보여주기</title>
+<title>Location</title>
 <script src="https://kit.fontawesome.com/643a314a64.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -53,7 +53,7 @@ body{
     }
     .header p {
         font-family: "Noto Sans KR", serif; /* 폰트 적용 */
-        font-size: 14px;
+        font-size: 16px;
     }
     .locationNav
     {

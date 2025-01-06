@@ -7,6 +7,9 @@ public class Recommendation
 	private String recommendTitle;	//제목
 	private String recommendContent;	//내용
 	private String recommendDate;	//작성일자
+	private String category;
+	private String area;
+	private String status;
 	
 	// 1. 생성자 만들기
 	public Recommendation() 
@@ -44,6 +47,30 @@ public class Recommendation
 	}
 	public void setRecommendDate(String string) {
 		this.recommendDate = string;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
 	}
 	
 

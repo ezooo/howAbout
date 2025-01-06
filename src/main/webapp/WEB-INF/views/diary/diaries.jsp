@@ -119,15 +119,15 @@ body{
 	    }
 	    .header p {
 	        font-family: "Noto Sans KR", serif; /* 폰트 적용 */
-	        font-size: 14px;
+	        font-size: 16px;
 	    }
-	    .diarywrite
+	    .diaryNav
 	    {
 	    	text-align: right;
 	    	align-content: center;
 	    	padding: 10px 5%;
 	    }
-	    .diarywrite > a
+	    .diaryNav > a
 	    {
 	    	padding : 0 5px;
 	    	text-decoration: none;
@@ -156,7 +156,7 @@ body{
 	<h2><i class="bi bi-book"></i>&nbsp;DIARY</h2>
 	<p> 다른 사람들은 이런 다이어리를 작성했어요 ! </p>
 </div>
-<div class="diarywrite">
+<div class="diaryNav">
 	<a href="/howAbout/diaries/addDiary"><i class="bi bi-pencil-square"></i>&nbsp;작성</a>
 	<a href="/howAbout/diaries/my"><i class="bi bi-book"></i>&nbsp;내 다이어리</a>
 </div>

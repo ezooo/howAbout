@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관광지 상세 페이지</title>
+<title>Location</title>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://kit.fontawesome.com/643a314a64.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -51,7 +51,7 @@ body{
     }
     .header p {
         font-family: "Noto Sans KR", serif; /* 폰트 적용 */
-        font-size: 14px;
+        font-size: 16px;
     }
     .header p span {
         font-family: "Noto Sans KR", serif; /* 폰트 적용 */
@@ -133,7 +133,7 @@ body{
     	align-content:center;
     	text-decoration: none;
     	padding : 5px 15px;
-    	font-size: 13px;
+
     	margin : 20px 2px;
     	border : 1px hidden;
     	border-radius: 7px;
@@ -180,7 +180,6 @@ body{
     	align-content:center;
     	text-decoration: none;
     	padding : 5px 15px;
-    	font-size: 13px;
     	margin : 20px 10px;
     	border : 1px hidden;
     	border-radius: 7px;
@@ -250,6 +249,7 @@ body{
             <p> 주 소 : <%= location.getUser_address() %> </p>
             <p> 문 의 : <%= location.getTelno() %> </p>
             <hr>
+            
             <p> <%= location.getData_content() %> </p>
         </div>
 		<div class="clickBox">

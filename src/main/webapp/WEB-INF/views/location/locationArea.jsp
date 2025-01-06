@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관광지 찾기</title>
+<title>Location</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://kit.fontawesome.com/643a314a64.js" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -311,7 +311,7 @@ body{
     }
     .header p {
         font-family: "Noto Sans KR", serif; /* 폰트 적용 */
-        font-size: 14px;
+        font-size: 16px;
     }
     .locationNav
     {

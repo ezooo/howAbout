@@ -19,6 +19,9 @@ public class RecommendationRowMapper implements RowMapper<Recommendation>
 		recommendation.setRecommendTitle(rs.getString(3));
 		recommendation.setRecommendContent(rs.getString(4));
 		recommendation.setRecommendDate(rs.getString(5));
+		recommendation.setCategory(rs.getString(6));
+		recommendation.setArea(rs.getString(7));
+		recommendation.setStatus(rs.getString(8));
 		
 		return recommendation;
 	}
