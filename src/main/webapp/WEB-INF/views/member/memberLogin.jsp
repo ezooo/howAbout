@@ -275,7 +275,5 @@
 
 		
 	</div>
-
-	<p> <a href="/howAbout/user/home">Home</a> </p>
 </body>
 </html>

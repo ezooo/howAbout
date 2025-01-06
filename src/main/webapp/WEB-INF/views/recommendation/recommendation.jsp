@@ -106,7 +106,7 @@ body {
 	</div>
     <div class="container mt-5">
         <p>제 목 : <span class="recommend-title"><%= recommendation.getRecommendTitle() %></span></p>
-        <p>작성자 ID : <span><%= recommendation.getUserId() %></span></p>
+        <p>작성자 : <span><%= recommendation.getUserId() %></span></p>
         <p>작성일 : <span><%= recommendation.getRecommendDate() %></span></p>
         <hr>
         <p>추천 내용 : <span class="recommend-content"><%= recommendation.getRecommendContent() %></span></p>

@@ -187,7 +187,8 @@ public class DiaryController
 	{																						//다이어리 아이디로 찾은 해당 다이어리 정보 담을 모델
 		System.out.println("DiaryController - updateDiary in");
 		System.out.println("수정할 다이어리 아이디 받아옴 : "+diaryId);
-		Diary diaryById = diaryService.getDiaryById(diaryId);
+		//Diary diaryById = diaryService.getDiaryById(diaryId);
+		Diary diaryById = diaryService.getOnediary(diaryId);
 		System.out.println("다이어리 찾아옴 수정페이지로 이동.. 하기전에 다이어리 정보 모델에 넣기");
 		model.addAttribute("diaryById",diaryById);
 		return "diary/updateDiary";
@@ -264,5 +265,5 @@ public class DiaryController
 		return "redirect:/diaries";
 	}
 
-	
+
 }

@@ -19,19 +19,6 @@ public class Diary
 	//private int number = 0;
 	//private LocalDateTime diaryId;	
 	
-//	public Diary(String userId, String visit_date, String visit_diary) 
-//	{
-//		super();
-//		System.out.println("다이어리 생성자");
-//		this.userId = userId;
-//		this.visit_date = visit_date;
-//		this.visit_diary = visit_diary;
-//		//this.diaryId = userId + (++number);
-//		//this.diaryId = System.currentTimeMillis();
-//		
-//		System.out.println("다이어리 생성 완료 ! 다이어리 아이디는 : "+diaryId);
-//	}
-	
 	public Diary() 
 	{
 		super();

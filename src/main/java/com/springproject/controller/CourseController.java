@@ -49,11 +49,11 @@ public class CourseController {
 		        // 세션이 없을 경우 처리
 		    	System.out.println("로그인 필요");
 		        model.addAttribute("error", "로그인이 필요합니다.");
-		        return "login"; // 로그인 페이지로 리다이렉트
+		        return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
 		    }
 		List<Course> list = courseService.getAllCourse();
 		model.addAttribute("listOfCourses", list);
-		return "Courses";
+		return "course/Courses";
 	}
 	@GetMapping("/add")
 	public String requestAddCourseForm(@ModelAttribute("NewCourse") Course NewCourse,
@@ -75,7 +75,7 @@ public class CourseController {
 	    	System.out.println("로그인 필요");
 	        System.out.println("=================세션 없음. 로그인하세요.===============");
 	        model.addAttribute("error", "로그인이 필요합니다.");
-	        return "login"; // 로그인 페이지로 리다이렉트
+	        return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
 	    }
 		
 		Map<String,String> selectedLocations=(Map<String, String>)session.getAttribute("selectedLocations");
@@ -105,7 +105,7 @@ public class CourseController {
 		model.addAttribute("NewCourse",NewCourse);
 		System.out.println("NewCourse : "+NewCourse);
 		System.out.println("List 있는지 확인 : " + NewCourse.getLocation_names().isEmpty());
-		return "addCourse";
+		return "course/addCourse";
 	}
 	@GetMapping("/selectLocation")
 	@ResponseBody
@@ -157,7 +157,7 @@ public class CourseController {
 		System.out.println("submitId : "+ submitId);
 		List<Course> courseFindById = courseService.getCourseFindById(submitId);
 		model.addAttribute("courseFindById", courseFindById);
-		return "Course";
+		return "course/Course";
 	}
 	@GetMapping("/update")
 	public String requestUpdateCourseForm(@ModelAttribute("updateCourse") Course course,
@@ -169,7 +169,7 @@ public class CourseController {
 		Course courseByCourseId = courseService.getOneCourse(course_id);
 		model.addAttribute("course", courseByCourseId);
 
-		return "updateCourse";
+		return "course/updateCourse";
 	}
 	@PostMapping("/update")
 	public String submitUpdateCourse(@ModelAttribute("updateCourse") Course course) throws Exception {

@@ -35,12 +35,12 @@ public class DiaryServiceImpl implements DiaryService
 		return diaryRepository.getMyDiary(userId);
 	}
 
-	@Override
-	public Diary getDiaryById(long diaryId) 
-	{
-		System.out.println("DiaryServiceImpl - getDiaryById in - 레파지토리 함수 호출");
-		return diaryRepository.getDiaryById(diaryId);
-	}
+//	@Override
+//	public Diary getDiaryById(long diaryId) 
+//	{
+//		System.out.println("DiaryServiceImpl - getDiaryById in - 레파지토리 함수 호출");
+//		return diaryRepository.getDiaryById(diaryId);
+//	}
 
 	@Override
 	public void setUpdateDiary(Diary diary) 
@@ -59,6 +59,12 @@ public class DiaryServiceImpl implements DiaryService
 	public Diary getOnediary(Long diaryId) 
 	{
 		return diaryRepository.getOnediary(diaryId);
+	}
+
+	@Override
+	public int countMyDiary(String userId) 
+	{
+		return diaryRepository.countMyDiary(userId);
 	}
 
 }

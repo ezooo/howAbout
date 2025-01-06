@@ -30,13 +30,13 @@ public class LocationController
 	@Autowired
 	LocationService locationService;
 	
-	@RequestMapping
+	@GetMapping
 	public String locationin()
 	{
 		return "location/locationArea";
 	}
 	
-	@RequestMapping("/addapi")
+	@GetMapping("/addapi")
 	public String addLocationAPI(HttpServletRequest request)	//관리자만 사용할 수 있도록 코드 수정
 	{
 		String sessionid;

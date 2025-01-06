@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>네비게이션</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
 .noto-sans-kr-<uniquifier> {
 	  font-family: "Noto Sans KR", serif;
@@ -14,6 +15,7 @@
 	  font-weight: <weight>;
 	  font-style: normal;
 	}
+
 *{
 	margin : 0 auto;
 	padding : 0px;
@@ -27,13 +29,15 @@
 	padding: 20px;
 	display : flex;
 	justify-content: space-between;
+	align-items: center;
+	text-align: center;
 	width : 100%;
 }
 #navbox a{
 	font-style: none;
 	color : white;
 	text-decoration: none;
-	font-size: 14px;
+	font-size: 16px;
 	padding : 0 2px;
 	font-weight : 600;
 }
@@ -48,6 +52,11 @@
 {
 	padding : 0 10px;
 }
+#navbox .logo
+{
+	font-size: 24px;
+	font-weight: 600;
+}
 </style>
 </head>
 
@@ -57,16 +66,17 @@
 %>
 <div id="navbox">
 	<div class="navleft">
-		<a href="/howAbout/">howAbout </a>
+		<a href="/howAbout/" class="logo">howAbout </a>
 	</div>
 	<div class="navmiddle">
-		<a href="/howAbout/diaries">다이어리</a>
-		<a href="/howAbout/recommend">추천게시판</a>
 		<a href="/howAbout/location">관광지</a>
-		<a href="/howAbout/place/serchRest">시설검색</a>
-		<a href="/howAbout/review">리뷰</a>
 		<a href="/howAbout/festival">축제</a>
+		<a href="/howAbout/course">여행코스</a>
+		<a href="/howAbout/place/serchRest">시설검색</a>
+		<a href="/howAbout/diaries">다이어리</a>
 		<a href="/howAbout/schedule">캘린더</a>
+		<a href="/howAbout/review/usersReviewran">리뷰</a>
+		<a href="/howAbout/recommend">추천게시판</a>
 	</div>
 	<div class="navright">
 	<%

@@ -9,9 +9,13 @@ public interface DiaryService
 	void setNewDiary(Diary diary);
 	List<Diary> getAllDiary();
 	List<Diary> getMyDiary(String userId);
-	Diary getDiaryById(long diaryId);
+	//Diary getDiaryById(long diaryId);
 	void setUpdateDiary(Diary diary);
 	void deleteDiary(long diaryId);
 	Diary getOnediary(Long diaryId);
-	
+	int countMyDiary(String userId);
 }
+
+/*
+- data_title:String 
+*/

@@ -156,7 +156,7 @@ public class WeatherController {
         	
         	StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"); /*URL*/
         	
-			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=8a5yxDAXFyOyai1ZLcXy%2FdG0jSa2vqtKlUPxIBP1aELcn7jSpmLosDgAM%2BAVZJ8P2ELqQf8EejHNeyb3e5W3wQ%3D%3D");
+			urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=GAzgJ480xJjSwTbjpaBLPgn0kMCn6Amj57IbjqD8SbrlwlI2Wu3ewzCyivA%2FgVyDtqQ3OZj9LmGrh3ccrCFbOg%3D%3D");
 			urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
 	        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8")); /*한 페이지 결과 수*/
 	        urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/

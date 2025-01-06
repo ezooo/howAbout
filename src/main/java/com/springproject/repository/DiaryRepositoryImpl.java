@@ -6,18 +6,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import com.springproject.domain.Diary;
-import com.springproject.domain.Member;
-import com.springproject.exception.DiaryIdException;
 
-@Repository	//이거 안하니까 객체 생성 못한다고 화냄
+@Repository
 public class DiaryRepositoryImpl implements DiaryRepository
 {
-	//private Map<String, Diary> diaryList;	// 목적 : 멤버 아이디 별로 각각 다이어리 만들어서 담아주기
-	//private Map<String, List<Diary>> diaryIdList;	//여기는 멤버 아이디만 담고, 멤버별 다이어리는 리스트에 담음
-	private List<Diary> diaryList = new ArrayList<Diary>();
-	List<Diary> myDiary;	// 내 아이디에 해당하는 다이어리만 가져와서 담을 객체
+	//private List<Diary> diaryList = new ArrayList<Diary>();
+	private List<Diary> myDiary;	// 내 아이디에 해당하는 다이어리만 가져와서 담을 객체
 	
 	//db 연결을 위한 설정추가
 	private JdbcTemplate template;
@@ -26,7 +21,7 @@ public class DiaryRepositoryImpl implements DiaryRepository
 	{
 		this.template = new JdbcTemplate(dataSource);
 	}
-	String SQL;
+	private String SQL;
 	//db설정end
 	
 	public DiaryRepositoryImpl()
@@ -81,27 +76,14 @@ public class DiaryRepositoryImpl implements DiaryRepository
 	}
 
 	@Override
-	public Diary getDiaryById(long diaryId)
+	public int countMyDiary(String userId)
 	{
-		System.out.println("DiaryRepositoryImpl getDiaryById in");
-		Diary diaryInfo = null;		//원하는 다이어리 찾으면 여기에 정보담기
+		System.out.println("DiaryRepositoryImpl getDiaryCount in");
 		
-		String SQL = "select count(*) from diary where diaryId=?";
-		int rowCount = template.queryForObject(SQL, Integer.class, diaryId);	//레코드 갯수가 한 개 이상일 때
-		if(rowCount != 0)
-		{
-			System.out.println("DiaryRepositoryImpl getDiaryById rowCount != 0");
-			SQL = "select * from diary where diaryId=?";
-			diaryInfo = template.queryForObject(SQL, new DiaryRowMapper(), new Object[] {diaryId});
-		}
-		
-		if(diaryInfo == null)
-		{
-			System.out.println("다이어리 못 찾아서 정보가 비었다");
-			throw new DiaryIdException();
-		}
-		System.out.println("getDiaryById 동작 완료");
-		return diaryInfo;
+		String SQL = "select count(*) from diary where userId=?";
+		int rowCount = template.queryForObject(SQL, Integer.class, new Object[] {userId});
+		System.out.println("다이어리 갯수는 : "+rowCount);
+		return rowCount;
 	}
 
 	@Override
