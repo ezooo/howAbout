@@ -93,7 +93,7 @@ body {
 
 <body>
 <%
-	Recommendation recommendation = (Recommendation)request.getAttribute("recommendation");
+	Recommendation recommendation = (Recommendation)request.getAttribute("recommendation");	
 %>
 <jsp:include page="../nav.jsp" flush="false"></jsp:include>
 <div id="body">

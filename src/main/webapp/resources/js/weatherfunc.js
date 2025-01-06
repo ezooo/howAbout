@@ -71,25 +71,25 @@ function weatherWeek(weather)
         // 날짜가 4일 후부터 10일 후 사이인 경우
         if (dateformat === fourthdd) {
             todaybox.innerHTML = weather.wf4;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin4 + " 최고기온 : " + weather.taMax4;
+            todaytemp.innerHTML = "최저" + weather.taMin4 + " 최고" + weather.taMax4;
         } else if (dateformat === fifthdd) {
             todaybox.innerHTML = weather.wf5;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin5 + " 최고기온 : " + weather.taMax5;
+            todaytemp.innerHTML = "최저" + weather.taMin5 + " 최고" + weather.taMax5;
         } else if (dateformat === sixthdd) {
             todaybox.innerHTML = weather.wf6;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin6 + " 최고기온 : " + weather.taMax6;
+            todaytemp.innerHTML = "최저" + weather.taMin6 + " 최고" + weather.taMax6;
         } else if (dateformat === seventhdd) {
             todaybox.innerHTML = weather.wf7;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin7 + " 최고기온 : " + weather.taMax7;
+            todaytemp.innerHTML = "최저" + weather.taMin7 + " 최고" + weather.taMax7;
         } else if (dateformat === eighthdd) {
             todaybox.innerHTML = weather.wf8;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin8 + " 최고기온 : " + weather.taMax8;
+            todaytemp.innerHTML = "최저" + weather.taMin8 + " 최고" + weather.taMax8;
         } else if (dateformat === ninthdd) {
             todaybox.innerHTML = weather.wf9;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin9 + " 최고기온 : " + weather.taMax9;
+            todaytemp.innerHTML = "최저" + weather.taMin9 + " 최고" + weather.taMax9;
         } else if (dateformat === tenthdd) {
             todaybox.innerHTML = weather.wf10;
-            todaytemp.innerHTML = "최저기온 : " + weather.taMin10 + " 최고기온 : " + weather.taMax10;
+            todaytemp.innerHTML = "최저" + weather.taMin10 + " 최고" + weather.taMax10;
         }
 		    
 	}

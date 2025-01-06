@@ -284,8 +284,7 @@ public class WeatherController {
 	        JSONObject body = response.getJSONObject("body");
 	        JSONObject items = body.getJSONObject("items");
 	        JSONArray item = items.getJSONArray("item");
-	        System.out.println("중기예보 제이슨 : "+item);
-	        
+	        //System.out.println("중기예보 제이슨 : "+item);        
 	        weather.setBasedate(baseDate);
 	        weather.setWf4(item.getJSONObject(0).getString("wf4Am"));
 	        weather.setWf5(item.getJSONObject(0).getString("wf5Am"));
@@ -309,7 +308,7 @@ public class WeatherController {
 				if(sessionid != null)
 				{
 					//세션에서 유저아이디 꺼내기
-					Member mb = (Member) request.getSession(false).getAttribute("member");
+					Member mb = (Member) request.getSession(false).getAttribute("userStatus");
 					if(mb !=  null)
 					{
 						String useraddr = mb.getUserAddr();
@@ -324,7 +323,7 @@ public class WeatherController {
 				}
 			}
 	        regId = weatherService.getRegCode(areaname);	
-	        System.out.println("지역코드 받아옴");
+	        System.out.println("지역코드 받아옴 : "+areaname+" 코드는 : "+regId);
 	        
 	        StringBuilder urlTempBuilder = new StringBuilder("http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"); /*URL*/
 	        urlTempBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "="+clientKey); /*Service Key*/

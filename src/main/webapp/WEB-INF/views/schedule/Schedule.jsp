@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List"  %>
 <%@ page import="org.springframework.ui.Model"  %>
-
 <%@ page session="false" %>
 <!DOCTYPE html>
 <html>
