@@ -75,9 +75,9 @@ body {
 </head>
 <body>
 	<div>
-		<div><a href="${pageContext.request.contextPath}/calendar?year=${preYear}&month=${preMonth}"><button>이전 달</button></a></div>
+		<div><a href="${pageContext.request.contextPath}/schedule?year=${preYear}&month=${preMonth}"><button>이전 달</button></a></div>
 		<div id="monthDiv" > <span id="spanYear">${year}</span>년 <span id="spanMonth">${month}</span>월</div>
-		<div><a href="${pageContext.request.contextPath}/calendar?year=${nextYear}&month=${nextMonth}"><button>다음 달</button></a></div>
+		<div><a href="${pageContext.request.contextPath}/schedule?year=${nextYear}&month=${nextMonth}"><button>다음 달</button></a></div>
 	</div>
 	<div class="calendar">
 		<div class="header">일</div>

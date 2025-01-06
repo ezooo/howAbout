@@ -2,7 +2,6 @@ package com.springproject.repository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -13,15 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import com.springproject.domain.Recommendation;
 
-@Repository	//1. 저는 리파지토리에요
+@Repository	
 public class RecommendationRepositoryImpl implements RecommendationRepository
 {
-	// 4. 일단 리스트가 있어야 뭐든 담을 수 있다.
-	private List<Recommendation> recommendationList = new ArrayList<Recommendation>();
 	
-	// 10. db연결
 	private JdbcTemplate template;
-	// 11. JdbcTemplate 클래스의 속성에 대한 Setter() 메서드
+
 	@Autowired
 	public void setJdbctemplate(DataSource dataSource)
 	{
@@ -30,28 +26,25 @@ public class RecommendationRepositoryImpl implements RecommendationRepository
 	String SQL;
 	
 	public RecommendationRepositoryImpl() 
-	{	// 5. 생성자에서 add 해야하나..?
+	{	
 		super();
 		System.out.println("RecommendationRepositoryImpl 기본생성자 진입");
 	}
 
-	@Override	// 2. 게시글 전체 보여주기
+	@Override
 	public List<Recommendation> getAllRecommend() 
 	{
 		System.out.println("RecommendationRepositoryImpl getAllRecommend in");
 		SQL = "select * from recommendation";	//쿼리문 작성
 		List<Recommendation> recommendationList = template.query(SQL, new RecommendationRowMapper());
 		
-		return recommendationList;	// 7. 리스트 리턴. ㅓ컨트롤러로 돌아감
+		return recommendationList;	
 	}
 
 	@Override
 	public void addRecommend(Recommendation rd) 
 	{
 		System.out.println("RecommendationRepositoryImpl addRecommend in");
-		//입력받은 내용 모델에 담아서 여기까지 가지고 옴
-		//이거를 이제 어레이리스트에 담기
-		rd.setRecommendId(System.currentTimeMillis());
 		LocalDateTime today = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년MM월dd일 HH:mm");
         rd.setRecommendDate(today.format(formatter));

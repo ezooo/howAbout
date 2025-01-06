@@ -72,7 +72,7 @@ public class MemberController{
 	
 	//회원가입 페이지 이동
 	@GetMapping("/joinMember")
-	public String createMemberForm(@ModelAttribute Member member) { return "member/joinMember"; }
+	public String createMemberForm(@ModelAttribute Member member) { return "member/memberAdd"; }
 	
 	@PostMapping("/joinMember")
 	public String createMember(@ModelAttribute Member member, @RequestParam("userIcon") MultipartFile file, HttpServletRequest req) {

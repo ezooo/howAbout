@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>관광지 상세 페이지</title>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://kit.fontawesome.com/643a314a64.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -146,6 +147,50 @@ body{
     a{
     	text-decoration: none;
     }
+    
+            /* 기본 스타일 */
+        #customConfirm {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #ccc;
+            border-radius:5px;
+            padding: 50px 80px 30px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .clickBoxx a{
+    	display: inline-block;
+    	width: 60px;
+    	text-align:center;
+    	align-content:center;
+    	text-decoration: none;
+    	padding : 5px 15px;
+    	font-size: 13px;
+    	margin : 20px 10px;
+    	border : 1px hidden;
+    	border-radius: 7px;
+    	background-color: #6998AB; 
+    	color : white;
+    }
+    .clickBoxx a:hover {
+        background-color: orange;
+        transition: 0.5s ease;
+    }
     </style>
 </head>
 <body>
@@ -224,15 +269,30 @@ body{
         </div>
     </div>
 </div>
+<div id="overlay"></div>
+<div id="customConfirm">
+    <p>장소를 삭제하시겠습니까?</p>
+    <div class="clickBoxx">
+        <a href="#" onclick="confirmAction(true)">확인</a>
+        <a href="#" onclick="confirmAction(false)">취소</a>
+    </div>
+</div>
 <script>
     function confirmDelete(num) {
-        if (confirm("장소를 삭제하시겠습니까?")) {
-            window.location.href = "/howAbout/location/delete?num=" + num;
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('customConfirm').style.display = 'block';
+
+        window.confirmAction = function(confirmed) {
+            if (confirmed) {
+                window.location.href = "/howAbout/location/delete?num=" + num;
+            }
+            // 숨기기
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('customConfirm').style.display = 'none';
         }
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

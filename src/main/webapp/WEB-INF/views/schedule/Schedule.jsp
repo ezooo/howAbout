@@ -104,9 +104,9 @@
 
 <div class="text-center container">
 	<div id="calendarButton" class="row pb-lg-3 col-lg-6 col-md-8 mx-auto">
-        <div class="col text-center"><a href="${pageContext.request.contextPath}/calendar?year=${preYear}&month=${preMonth}"><button>이전 달</button></a></div>
+        <div class="col text-center"><a href="${pageContext.request.contextPath}/schedule?year=${preYear}&month=${preMonth}"><button>이전 달</button></a></div>
         <div class="col text-center" style="font-size: 32px;" id="monthDiv" > <span id="spanYear">${year}</span>년 <span id="spanMonth">${month}</span>월</div>
-        <div class="col text-center"><a href="${pageContext.request.contextPath}/calendar?year=${nextYear}&month=${nextMonth}"><button>다음 달</button></a></div>
+        <div class="col text-center"><a href="${pageContext.request.contextPath}/schedule?year=${nextYear}&month=${nextMonth}"><button>다음 달</button></a></div>
     </div>
 	</div>
 	<div class="calendar mx-auto">

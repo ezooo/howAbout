@@ -4,49 +4,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8ba5137fb1c2b1e37ac6722ae8d8e587&libraries=services"></script>
+<title>Place Serch</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Yeseva+One&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d75e97d418.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8ba5137fb1c2b1e37ac6722ae8d8e587&libraries=services"></script>
 <style type="text/css">
-
-	@font-face {
-	    font-family: 'KOTRA_GOTHIC';
-	    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-
-	@font-face {
-	    font-family: 'SokchoBadaDotum';
-	    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_1@1.0/SokchoBadaDotum.woff2') format('woff2');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-	
-	@font-face {
-	    font-family: 'Pretendard-Regular';
-	    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-	    font-weight: 400;
-	    font-style: normal;
-	}
 	
 	*
 	{
-		font-family: 'SokchoBadaDotum';
+		font-family: "Noto Sans KR", serif;
+	  	font-optical-sizing: auto;
+	  	font-weight: <weight>;
+	  	font-style: normal;
 	}
-
-	body
+	
+	#fullCon
 	{
-		height: 100%;
-		margin: 0 auto;
-		overflow: hidden;
-		margin: 0;
+		position:absolute;
+		top:0;
+		z-index:-5;
+		/*background-color: #FFF5E1;*/
+		width: 100%;
 		height: 100vh;
 	}
 	
 	#gyugnamMap
 	{
-		position: relative;
+		position: fixed;
+		top : 100px;
+		left : 200px;
 		width: 800px;
 		height: 800px;
 		background-color: transparent;
@@ -67,6 +58,7 @@
 	    font-style: normal;
 	    font-size: 20px;
 	    color: white;
+	    opacity: 0;
 	}
 	
 	.region_img
@@ -302,7 +294,7 @@
 		cursor: pointer;
 		font-weight: bold;
 		text-align: center;
-		width: 80px;
+		width: 100px;
 		transition: background-color 0.3s; /* 배경 색상 변화에 애니메이션 추가 */
 	}
 	
@@ -356,31 +348,54 @@
 	#region17:hover + #region17_img { opacity: 1; }
 	#region18:hover + #region18_img { opacity: 1; }
 	
-	.wrapper
-	{
-		display: flex;
-		justify-content: center;
-		margin-top: 100px;
-	}
+	#region01:hover { opacity: 1; }
+	#region02:hover { opacity: 1; }
+	#region03:hover { opacity: 1; }
+	#region04:hover { opacity: 1; }
+	#region05:hover { opacity: 1; }
+	#region06:hover { opacity: 1; }
+	#region07:hover { opacity: 1; }
+	#region08:hover { opacity: 1; }
+	#region09:hover { opacity: 1; }
+	#region10:hover { opacity: 1; }
+	#region11:hover { opacity: 1; }
+	#region12:hover { opacity: 1; }
+	#region13:hover { opacity: 1; }
+	#region14:hover { opacity: 1; }
+	#region15:hover { opacity: 1; }
+	#region16:hover { opacity: 1; }
+	#region17:hover { opacity: 1; }
+	#region18:hover { opacity: 1; }
 	
 	#listBox
 	{
-		width: 500px;
-		margin-left: 50px;
+		position: absolute;
+		z-index: -1;
+		top: 100px;
+		right: 200px;
+		width: 680px;
+		height: 85vh;
+		padding-left: 30px;
+		padding-right: 30px;
+		border-radius: 30px;
 	}
 	
 	.scrollable {
-	    max-height: 650px; 
+		color: #2C3E50;
+	    max-height: 590px; 
+	    overflow: hidden;
 	    overflow-y: auto; 
-	    border: 1px solid #ccc; 
+	    border: 2px solid #ccc; 
 	    padding: 10px;
 	    border-radius: 10px;
+	    background-color: white;
 	}
 	
 	.list_aTag
 	{
-		color: gray;
-		font-family: 'NPSfontBold';
+		font-size: 20px;
+		color: black;
+		font-family: 'Pretendard-Regular';
 	    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
 	    font-weight: 700;
 	    font-style: normal;
@@ -391,8 +406,8 @@
 	.list_text
 	{
 		font-size: 16px;
-		margin-bottom: -10px;
-		font-family: 'Pretendard-Regular';
+		margin-bottom: -3px;
+		color : #34495E;
 	}
 	
 	#listFormSerch
@@ -403,10 +418,21 @@
 		
 	}
 	
+	#listFormSerch > select
+	{
+		border-radius: 10px;
+		background-color: transparent;
+		outline: none;
+	}
+	
 	#city
 	{
+		color: #2C3E50;
 		height: 40px;
 		font-size: 40px;
+		margin-top: 40px;
+		margin-bottom: 30px;
+		font-weight: 800;
 	}
 	
 	#listFormSerch > select
@@ -414,38 +440,46 @@
 		height: 35px;
 		width: 20%;
 		border: none;
-		font-family: 'KOTRA_GOTHIC';
+		font-family: 'Pretendard-Regular';
 	}
 	
 	#listFormSerch > select > option
 	{
-		font-family: 'KOTRA_GOTHIC';
+		font-family: 'Pretendard-Regular';
 	}
 	
 	#searchButton
 	{
 		height: 35px;
 		width: 90px;
+		border: none;
+		border-radius: 10px;
+		background-color: #FF6F61;
+		font-weight: 700;
+		color: #2C3E50;
 	}
 	
 	.list_tel
 	{
 		margin-bottom: 15px;
 	}
+	
+	#mapBackGround
+	{
+		position: fixed;
+		left: 100px;
+		width: 1000px;
+		height: 90vh;
+		border-bottom-left-radius: 100px;
+		border-bottom-right-radius: 100px;
+	}
 		
 </style>
 </head>
 <body>
-	<div class="homeNav">
-		<nav>
-			<a href="/howAbout/user/logout" class="nav-item">로그아웃</a>
-			<a href="/howAbout/" class="nav-item">회원정보</a>
-			<a href="/howAbout/" class="nav-item">다이어리</a>
-			<a href="/howAbout/" class="nav-item">여행계획</a>
-			<a href="/howAbout/" class="nav-item">캘린더</a>
-		</nav>
-	</div>
-	<div class="wrapper">
+	<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+	<div class="container-fluid" id="fullCon"></div>
+	<div id="mapBackGround">
 		<div id="gyugnamMap">
 			<div id="region01" class="region">거제시</div>
 			<div id="region01_img" class="region_img"></div>
@@ -501,13 +535,13 @@
 			<div id="region18" class="region">합천군</div>
 			<div id="region18_img" class="region_img"></div>
 		</div>
+	</div>
 		<div id="listBox">
-			<div id="city"></div>
+			<div id="city">지도를 선택하세요</div>
 			<form id="listFormSerch">
-				
 				<!-- 창원시 -->
 				<select class="subCity" id="창원시" name="subCity" required style="display: none;" onchange="updateSubSelect(this.value)">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="의창구">의창구</option>
 				    <option value="성산구">성산구</option>
 				    <option value="마산합포구">마산합포구</option>
@@ -516,7 +550,7 @@
 				</select>
 					<!-- 의창구 -->
 					<select id="100101subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="동읍">동읍</option>
 					    <option value="북면">북면</option>
 					    <option value="대산면">대산면</option>
@@ -527,7 +561,7 @@
 					</select>
 					<!-- 성산구 -->
 					<select id="100102subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="귀산동">귀산동</option>
 					    <option value="반송동">반송동</option>
 					    <option value="용지동">용지동</option>
@@ -540,7 +574,7 @@
 					</select>
 					<!-- 마산합포구 -->
 					<select id="100103subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="구산면">구산면</option>
 					    <option value="진동면">진동면</option>
 					    <option value="진북면">진북면</option>
@@ -559,7 +593,7 @@
 					</select>
 					<!-- 마산회원구 -->
 					<select id="100104subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="내서읍">내서읍</option>
 					    <option value="회원1동">회원1동</option>
 					    <option value="회원2동">회원2동</option>
@@ -575,7 +609,7 @@
 					</select>
 					<!-- 진해구 -->
 					<select id="100105subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="충무동">충무동</option>
 					    <option value="여좌동">여좌동</option>
 					    <option value="태백동">태백동</option>
@@ -593,7 +627,7 @@
 					
 				<!-- 김해시 -->
 				<select class="subCity" id="김해시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="진영읍">진영읍</option>
 				    <option value="주촌면">주촌면</option>
 				    <option value="진례면">진례면</option>
@@ -617,7 +651,7 @@
 				
 				<!-- 진주시 -->
 				<select class="subCity" id="진주시" name="subCity" required style="display: none;" onchange="updateSubSelect(this.value)">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="시내동지구">시내동지구</option>
 				    <option value="문산읍">진영읍</option>
 				    <option value="내동면">주촌면</option>
@@ -638,7 +672,7 @@
 				</select>
 					<!-- 시내동지구 -->
 					<select id="100301subSelect" name="country" required style="display: none;">
-					    <option value="" disabled selected>선택하세요</option>
+					    <option value="" disabled selected>---</option>
 					    <option value="천전동">천전동</option>
 					    <option value="성북동">성북동</option>
 					    <option value="중앙동">중앙동</option>
@@ -657,7 +691,7 @@
 				
 				<!-- 양산시 -->
 				<select class="subCity" id="양산시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="물금읍">물금읍</option>
 				    <option value="동면">동면</option>
 				    <option value="원동면">원동면</option>
@@ -675,7 +709,7 @@
 				
 				<!-- 거제시 -->
 				<select class="subCity" id="거제시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="일운면">일운면</option>
 				    <option value="동부면">동부면</option>
 				    <option value="남부면">남부면</option>
@@ -698,7 +732,7 @@
 				
 				<!-- 통영시 -->
 				<select class="subCity" id="통영시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="산양읍">산양읍</option>
 				    <option value="용남면">용남면</option>
 				    <option value="도산면">도산면</option>
@@ -718,7 +752,7 @@
 				
 				<!-- 사천시 -->
 				<select class="subCity" id="사천시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="사천읍">사천읍</option>
 				    <option value="정동면">정동면</option>
 				    <option value="사남면">사남면</option>
@@ -737,7 +771,7 @@
 				
 				<!-- 밀양시 -->
 				<select class="subCity" id="밀양시" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="삼랑진읍">삼랑진읍</option>
 				    <option value="하남읍">하남읍</option>
 				    <option value="부북면">부북면</option>
@@ -758,7 +792,7 @@
 				
 				<!-- 함안군 -->
 				<select class="subCity" id="함안군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="가야읍">가야읍</option>
 				    <option value="칠원읍">칠원읍</option>
 				    <option value="함안면">함안면</option>
@@ -773,7 +807,7 @@
 				
 				<!-- 거창군 -->
 				<select class="subCity" id="거창군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="거창읍">거창읍</option>
 				    <option value="주상면">주상면</option>
 				    <option value="웅양면">웅양면</option>
@@ -790,7 +824,7 @@
 				
 				<!-- 창녕군 -->
 				<select class="subCity" id="창녕군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="창녕읍">창녕읍</option>
 				    <option value="남지읍">남지읍</option>
 				    <option value="고암면">고암면</option>
@@ -809,7 +843,7 @@
 				
 				<!-- 고성군 -->
 				<select class="subCity" id="고성군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="고성읍">고성읍</option>
 				    <option value="삼산면">삼산면</option>
 				    <option value="하일면">하일면</option>
@@ -828,7 +862,7 @@
 				
 				<!-- 하동군 -->
 				<select class="subCity" id="하동군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="하동읍">하동읍</option>
 				    <option value="화개면">화개면</option>
 				    <option value="악양면">악양면</option>
@@ -846,7 +880,7 @@
 				
 				<!-- 합천군 -->
 				<select class="subCity" id="합천군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="합천읍">합천읍</option>
 				    <option value="봉산면">봉산면</option>
 				    <option value="묘산면">묘산면</option>
@@ -868,7 +902,7 @@
 				
 				<!-- 남해군 -->
 				<select class="subCity" id="남해군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="남해읍">남해읍</option>
 				    <option value="이동면">이동면</option>
 				    <option value="상주면">상주면</option>
@@ -883,7 +917,7 @@
 				
 				<!-- 함양군 -->
 				<select class="subCity" id="함양군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="함양읍">함양읍</option>
 				    <option value="마천면">마천면</option>
 				    <option value="휴천면">휴천면</option>
@@ -900,7 +934,7 @@
 				
 				<!-- 산청군 -->
 				<select class="subCity" id="산청군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="산청읍">함양읍</option>
 				    <option value="차황면">마천면</option>
 				    <option value="오부면">휴천면</option>
@@ -916,7 +950,7 @@
 				
 				<!-- 의령군 -->
 				<select class="subCity" id="의령군" name="subCity" required style="display: none;">
-				    <option value="" disabled selected>선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="의령읍">의령읍</option>
 				    <option value="가례면">가례면</option>
 				    <option value="칠곡면">칠곡면</option>
@@ -933,13 +967,13 @@
 				</select>
 	
 				<select id="categorySelect" name="category" onchange="updateCategory()">
-				    <option value="" disabled selected>카테고리를 선택하세요</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="카페">카페</option>
 				    <option value="음식점">음식점</option>
 					<option value="숙박">숙박시설</option>
 				</select>
 				<select id="subCategoryFood" name="sub" style="display: none;">
-				    <option value="" disabled selected>세부 카테고리</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="한식">한식</option>
 				    <option value="중식">중식</option>
 				    <option value="일식">일식</option>
@@ -951,7 +985,7 @@
 				    <option value="뷔페">뷔페</option>
 				</select>
 				<select id="subCategorySleep" name="sub" style="display: none;">
-				    <option value="" disabled selected>세부 카테고리</option>
+				    <option value="" disabled selected>---</option>
 				    <option value="모텔">모텔</option>
 				    <option value="호텔">호텔</option>
 				    <option value="온천">온천</option>
@@ -962,7 +996,6 @@
 			</form>
 			<div id="list" class="scrollable">여기에 내용이 표시됩니다.</div>
 		</div>
-	</div>
 		
 </body>
 <script type="text/javascript">
@@ -1011,9 +1044,7 @@ function updateSubcity(region_text) {
 function updateSubSelect(selectedSubcity) {
     const subSelects = document.querySelectorAll('[id$="subSelect"]');
     
-    subSelects.forEach(select => {
-        select.style.display = 'none';
-    });
+    subSelects.forEach(select => { select.style.display = 'none'; });
 
     switch (selectedSubcity) {
         case '의창구':
@@ -1042,7 +1073,7 @@ function updateCategory() {
     const selectedCategory = categorySelect.value;
 }
 
-document.getElementById('citySelect').onchange = updateSubcity;
+//document.getElementById('citySelect').onchange = updateSubcity($(this).text());
 
 document.querySelectorAll('.subCity').forEach(select => {
     select.onchange = function() {
@@ -1071,7 +1102,70 @@ function updateCategory() {
 	}
 }
 
+document.getElementById('searchButton').addEventListener('click', function(event) {
+
+    event.preventDefault();
+	
+	var form = document.getElementById('listFormSerch');
+
+	// 선택된 city 값 가져오기
+	var city = $('#city').text();
+	var category = form.category.value;
+
+	// 선택된 subCity 값 가져오기
+	var subCity = '';
+	var subCityElements = document.getElementsByName('subCity');
+	for (var i = 0; i < subCityElements.length; i++) {
+	    if (subCityElements[i].style.display !== 'none') { // 보이는 subCity 선택
+	        subCity = subCityElements[i].value;
+	        break; // 첫 번째 선택된 값만 가져오기
+	    }
+	}
+	
+	// 선택된 country 값 가져오기
+	var country = '';
+	var countryElements = document.getElementsByName('country');
+	for (var i = 0; i < countryElements.length; i++) {
+	    if (countryElements[i].style.display !== 'none') { // 보이는 subCity 선택
+	        country = countryElements[i].value;
+	        break; // 첫 번째 선택된 값만 가져오기
+	    }
+	}
+	
+	// 선택된 subCategory 값 가져오기
+	var subCategory = '';
+	var subCategoryElements = document.getElementsByName('sub');
+	for (var j = 0; j < subCategoryElements.length; j++) {
+	    if (subCategoryElements[j].style.display !== 'none' && subCategoryElements[j].value) {
+	        subCategory = subCategoryElements[j].value; // 선택된 subCategory 가져오기
+	        break; // 첫 번째 선택된 값만 가져오기
+	    }
+	}
+	
+	console.log('검색버튼 눌렀음');
+	
+	$.ajax({
+	        url: '/howAbout/place/kakaoApiService',
+	        type: 'POST',
+	        contentType: 'application/json; charset=UTF-8',
+	        data: JSON.stringify({ city, subCity, category, subCategory, country }),
+	        success: function(keyword) {
+	            if(keyword.keyword){
+					searchPlaces(keyword.keyword);
+				} else {
+					places = keyword.list;
+					displayResults();
+				}
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('AJAX 오류:', error);
+	        }
+	    });
+
+});
+
 function searchPlaces(keyword) {
+	console.log("검색 키워드 : "+keyword);
     for (let page = 1; page <= 3; page++) {
         setTimeout(() => {
             ps.keywordSearch(keyword, (data, status) => {
@@ -1113,14 +1207,13 @@ function placesSearchCB(data, status, page, keyword) {
 	function sendToController(placeData) {
 			
 		$.ajax({
-			url: '/howAbout/place/kakaoMapconn', // 서버의 컨트롤러 URL로 변경
+			url: '/howAbout/place/kakaoMapconn',
 			type: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify(placeData),
 			success: function(response) {
 				places = response.list;
 				displayResults();
-				setupPagination();
 			},
 			error: function(xhr, status, error) {
 				console.error('AJAX 오류:', error);
@@ -1141,22 +1234,5 @@ function placesSearchCB(data, status, page, keyword) {
 		});
 	}
 
-	function setupPagination() {
-	    const totalPages = Math.ceil(places.length / pageSize);
-	    const paginationDiv = document.getElementById('pagination');
-	    paginationDiv.innerHTML = ''; // 이전 페이지네이션 초기화
-
-	    for (let i = 1; i <= totalPages; i++) {
-	        const pageLink = document.createElement('a');
-			pageLink.className = 'pageNum';
-	        pageLink.innerText = i;
-	        pageLink.href = '#';
-	        pageLink.onclick = function() {
-	            currentPage = i;
-	            displayResults();
-	        };
-	        paginationDiv.appendChild(pageLink);
-	    }
-	}
 </script>
 </html>

@@ -130,7 +130,7 @@ body{
             background-color: rgba(247, 166, 89, 0.9); 
             color: white; /* 텍스트 색상 */
             padding: 2px 4px; /* 패딩 조정 */
-            font-size: 12px; /* 글꼴 크기 조정 */
+            font-size: 14px; /* 글꼴 크기 조정 */
             border-radius: 4px;
             font-weight: 300;
         }
@@ -168,8 +168,8 @@ if(mb != null) {
                             <span class="badge custom-badge" style="margin-bottom: 5px;">
                             	<% if(diary.getIsopen().equals("true")) { %> 공개 <% } else { %> 비공개 <% } %>
                             </span>
-                            <p style="font-size: 15px; margin: 0;">
-                                <span style="font-size: 12px;"><%= diary.getVisit_date() %>&nbsp;</span> &raquo; <%= diary.getVisit_location()%> 
+                            <p style="font-size: 20px; margin: 0;">
+                                <span style="font-size: 14px;"><%= diary.getVisit_date() %>&nbsp;</span> &raquo; <%= diary.getVisit_location()%> 
                             </p>
                         </div>
                     </a>

@@ -10,16 +10,23 @@
 <!DOCTYPE html>
 <html>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8ba5137fb1c2b1e37ac6722ae8d8e587&libraries&libraries=services"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Yeseva+One&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/d75e97d418.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8ba5137fb1c2b1e37ac6722ae8d8e587&libraries=services"></script>
 <head>
 <meta charset="UTF-8">
-	<%
-		Place place = (Place)request.getAttribute("place");
-	%>
+	<% Place place = (Place)request.getAttribute("place"); %>
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		
+		let currentIndex = 0;
+		
 	    const currentUrl = window.location.href;
 	    
 	    let userId;
@@ -56,20 +63,61 @@
                 container.append('<p>작성된 리뷰가 없습니다.</p>');
                 return;
             }
-
+	        
 	        reviews.forEach(function(review) {
 	            const reviewElement = $('<div class="review"></div>');
-	            reviewElement.append('<p> <img width="100px" height="100px" src="/howAbout/resources/userIcon/'+review.iconName+'"/>' + review.reviewDate + '</p>');
-	            reviewElement.append('<p>' + review.reviewText + '</p>');
-	            reviewElement.append('<p> <a href="/howAbout/review/'+ review.userId +'/selectAll"> 작성자:'+ review.userId +'</a></p>');
+	            const reviewTextBox = $('<div class="review_textBox"></div>')
+	            // #review-container의 너비를 리뷰 수에 따라 조정
+	            const containerWidth = reviews.length * 500; // 각 리뷰가 500px이므로
+	            $('#review-container').css('width', containerWidth + 'px');
+	            
+	                let reviewText = review.reviewText;
+	            
+				    if (reviewText.length > 40) {
+				        reviewText = reviewText.substring(0, 40) + '...';
+				    }
+	            
+				reviewTextBox.append('<div class="review_userIcon" style="background-image: url(\'/howAbout/resources/userIcon/' + review.iconName + '\');"></div>');
+	            reviewTextBox.append('<p class="reviewUser">'+ review.userId +'</p>');
+	            reviewTextBox.append('<p class="reviewDate">'+ review.reviewDate +'</p>');
+	            reviewTextBox.append('<p class="reviewText">'+ reviewText +'</p>');
+	            reviewTextBox.append('<hr class="reviewBar">');
+	            
+	            reviewElement.append(reviewTextBox);
 	            
 	            if(review.userId == userId){
-	            	reviewElement.append('<a href="#" class="editReview" data-id="'+review.millisId+'" data-text="'+review.reviewText+'">수정</a> | ');
-	            	reviewElement.append('<a href="/howAbout/review/delete/'+review.millisId+'" class="deleteReview">삭제</a>');
+	            	reviewTextBox.append('<button type="button" class="editReview" data-id="'+review.millisId+'" data-text="'+review.reviewText+'">수정</button> | ');
+	            	reviewTextBox.append('<a href="/howAbout/review/delete/'+review.millisId+'" class="deleteReview">삭제</a>');
+	            } else {
+	            	reviewTextBox.append('<button type="button" class="selectReview" onclick="">자세히 보기</button>');	
 	            }
 	            
 	            container.append(reviewElement);
+	            
 	        });
+	        
+	        if (reviews.length > 2) {
+	            setInterval(slideReviews, 3000);
+	        }
+
+	    }
+
+	    function slideReviews() {
+	        const totalReviews = $('#review-container .review').length;
+	        const pixelsPerSlide = 500; // 각 리뷰의 너비는 500px
+
+	     	// 슬라이드 이동
+	        currentIndex++;
+
+	        // 현재 인덱스가 총 슬라이드 수를 초과하면 초기화
+	        if (currentIndex >= totalReviews-1) {
+	            currentIndex = 0;
+
+	            // 처음 리뷰를 다시 추가하여 부드럽게 이어지도록 함
+	            $('#review-container').css('transform', 'translateX(0)'); // 처음 위치로 돌아감
+	        } else {
+	            $('#review-container').css('transform', 'translateX(' + (-currentIndex * pixelsPerSlide) + 'px)');
+	        }
 	    }
 	    
 	    let currentReviewId; // 현재 수정 중인 리뷰 ID
@@ -107,6 +155,8 @@
 	                        displayReviews(data);
 	                    }
 	                });
+	                
+	                alert('정상적으로 수정이 완료되었습니다.');
 	            },
 	            error: function(xhr, status, error) {
 	                console.error('리뷰 수정에 실패했습니다:', error);
@@ -144,19 +194,41 @@
 </script>
 <style>
 
-	#map {
-		width: 800px;
-		height: 400px;
+	*
+	{
+		font-family: "Noto Sans KR", serif;
+	  	font-optical-sizing: auto;
+	  	font-weight: <weight>;
+	  	font-style: normal;
 	}
 	
-	body {
-    font-family: Arial, sans-serif;
-}
+	#backgroundCon2
+	{
+		position: fixed;
+		z-index: -5;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #FFF5E1;
+	}
 
-	.modal {
+	#map
+	{
+		position: absolute;
+		z-index: 2;
+		top:150px;
+		width: 1000px;
+		height: 550px;
+		border-radius: 10px;
+		
+	}
+
+	.modal
+	{
 	    display: none;
 	    position: fixed; 
-	    z-index: 1; 
+	    z-index: 5; 
 	    left: 0;
 	    top: 0;
 	    width: 100%; 
@@ -166,8 +238,10 @@
 	    background-color: rgba(0,0,0,0.4); 
 	}
 	
-	.modal-content {
+	.modal-content
+	{
 	    position: relative;
+	    z-index: 10;
 	    margin: 5% auto; 
 	    padding: 20px;
 	    border: 1px solid #888;
@@ -175,7 +249,8 @@
 	    background-color: white;
 	}
 	
-	.close {
+	.close
+	{
 	    color: #aaa;
 	    float: right;
 	    font-size: 28px;
@@ -183,53 +258,389 @@
 	}
 	
 	.close:hover,
-	.close:focus {
+	.close:focus
+	{
 	    color: black;
 	    text-decoration: none;
 	    cursor: pointer;
 	}
 	
-	iframe {
+	iframe
+	{
 	    width: 100%;
 	    height: 700px;
+	}
+	
+	#openModal
+	{
+		background-color: #FEE500; /* 카카오 색상 */
+		color: #3C1E1E; /* 글자 색상 */
+		border: none;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 20px;
+	}
+	
+	
+	.divCon
+	{
+		position: relative;
+		padding-top: 50px;
+		width: 1000px;
+		margin: 0 auto;
+	}
+	
+	#placeTitle
+	{
+		margin-bottom: 10px;
+		color: white;
+		text-align: left;
+	}
+	
+	.iTag
+	{
+		display: inline-block;
+		width: 30px;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#placeStatus
+	{
+		position: absolute;
+		top: 450px;
+		left: 30px;
+		z-index: 4;
+	}
+	
+	.placeStatusItag
+	{
+		display: flex;
+	}
+	
+	.placeStatusItag > p
+	{
+		margin: 0;
+		padding: 0;
+		margin-left: 10px;
+	}
+	
+	#kakaoStatus
+	{
+		padding-left: 20px;
+		padding-top: 20px;
+		background-color: rgba(255,255,255,1);
+		border-radius: 10px;
+		width: 390px;
+		height: 200px;
+	}
+	
+	#reviewCon
+	{
+		position: absolute;
+		top: 610px;
+		padding-left: 20px;
+		width: 1000px;
+		margin: 0 auto;
+	}
+	
+	#backgroundCon
+	{
+		position: absolute;
+		z-index: -3;
+		width: 100%;
+		height: 65vh;
+		background-color: #6998ab;
+	}
+	
+	#wishBtn
+	{
+		position: absolute;
+		top: 60px;
+		right: 0;
+		background-color: white;
+		border: none;
+		width: 100px;
+		height: 35px;
+		border-radius: 5px;
+	}
+	
+	.infoDiv
+	{
+		position: relative;
+		top: -60px;
+		text-align: center;
+		width: 250px;
+		height: 35px;
+		line-height: 35px;
+		background-color: white;
+		border-radius: 10px;
+	}
+	
+	.reviewCon
+	{
+		position: relative;
+		z-index: 1;
+		top: 20px;
+		width: 1050px;
+		height: 800px;
+		background-color: white;
+		border-radius: 25px;
+	}
+	
+	#review-write
+	{
+		position: absolute;
+		top: 200px;
+	}
+	
+	#reviewText, #editReviewText
+	{
+		display: block;
+		width: 850px;
+		height: 150px;
+		border-radius: 10px;
+		padding-left: 10px;
+		font-weight: 600;
+		font-size: 20px;
+		margin: 0 auto;
+		border: 2px solid #ccc;
+		font-size: 16px;
+		padding: 20px;
+	}
+	
+	#submitButton, #saveChanges
+	{
+		display: block;
+		border: none;
+		width: 130px;
+		height: 35px;
+		border-radius: 10px;
+		background-color: #6998ab;
+		color: white;
+		margin: 20px auto;
+	}
+	
+	#review-form
+	{
+		width: 1000px;
+		margin: 0 auto;
+	}
+	
+	.centerDiv
+	{
+		position: relative;
+		width: 1000px;
+	}
+	
+
+	
+	.review_textBox
+	{
+		position: relative;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		width: 400px;
+		height: 170px;
+		padding: 10px;
+		padding-left: 50px;
+		padding-right: 30px;
+	}
+	
+	.review_userIcon
+	{
+		position: absolute;
+		top: 50%;
+		left: -40px;
+		transform : translateY(-50%);
+		width: 80px;
+		height: 80px;
+		border-radius:100px;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	
+	.slider
+	{
+	    width: 100%; /* 슬라이더의 전체 너비 */
+	    max-width: 1000px; /* 최대 너비를 1000px로 설정 */
+	    overflow: hidden; /* 넘치는 부분은 숨김 */
+	    position: relative; /* 슬라이드 애니메이션에 필요 */
+	}
+	
+	#review-container
+	{
+	    display: flex; /* 가로로 나열 */
+	    transition: transform 0.5s ease; /* 슬라이드 애니메이션 효과 */
+	}
+	
+	.reviewText
+	{
+		height: 60px;
+		padding-top: 7px;
+	}
+	
+	.reviewUser
+	{
+		font-weight: 700;
+		font-size: 20px;
+	}
+	
+	.reviewDate
+	{
+		font-size: 12px;
+		color: #ccc;
+	}
+	
+	.reviewBar
+	{
+		margin-bottom: 10px;
+	}
+	
+	.review
+	{
+		box-sizing: border-box;
+    	width: 500px;
+	}
+	
+	.editReview
+	{
+		border: none;
+		width: 50px;
+		height: 20px;
+		background-color: #ccc;
+		font-size: 12px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	
+	.selectReview
+	{
+		border: none;
+		width: 80px;
+		height: 20px;
+		background-color: #ccc;
+		font-size: 12px;
+		border-radius: 5px;
+		cursor: pointer;
+		color: white;
+	}
+	
+	.deleteReview
+	{
+		display: inline-block;
+		width: 50px;
+		height: 20px;
+		background-color: red;
+		text-align: center;
+		font-size: 12px;
+		border-radius: 5px;
+	}
+	
+	.writeTitle > h2, .editTitle
+	{
+		width: 360px;
+		text-align: center;
+		color: #6998ab;
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+	
+	.writeBar
+	{
+		position: relative;
+		top: 50px;
+		z-index: -1;
+	}
+	
+	.redText
+	{
+		color: #ccc;
+		text-align: center;
+		margin-bottom: 30px;
 	}
 	
 </style>
 </head>
 <body>
 
-	<h1><%= place.getPlaceName() %></h1>
-	<p><%= place.getAddressName() %></p>
-	<p><%= place.getCategoryAll() %></p>
-	<p> <button type="button" onclick="saveWishList()">담기</button> </p>
-    <div id="map"></div>
-    <a href="#" id="openModal">카카오 정보 페이지 보기</a>
-    <hr>
-	<div id="review-container"></div>
-	<hr>
-<%
-	HttpSession session = request.getSession(false);
-	
-	if(session != null){
-		Member member = (Member)session.getAttribute("userStatus");
-		
-		if(member != null){
+	<jsp:include page="../nav.jsp" flush="false"></jsp:include>
+	<div class="container" id="backgroundCon"></div>
+	<div id="backgroundCon2"></div>
+	<div class="divCon">
+		<div id="placeTitleDiv">
+			<div class="placeTitleDiv">
+				<h1 id="placeTitle"><%= place.getPlaceName() %></h1>
+				<p> <button id="wishBtn" type="button" onclick="saveWishList()">WishList + </button> </p>
+			</div>
+			<hr>
+		</div>
+		<div id="map"></div>
+		<div id="placeStatus">
+				<div id="kakaoStatus">
+					<div class="placeStatusItag">
+						<span class="iTag"><i class="fa-solid fa-tags"></i></span><p><%= place.getCategoryAll() %></p>
+					</div>
+					<div class="placeStatusItag">
+						<span class="iTag"><i class="fa-solid fa-location-dot"></i></span><p><%= place.getAddressName() %></p>
+					</div>
+					<div class="placeStatusItag">
+						<span class="iTag"></span><p><%= place.getRoadAddress() %></p>
+					</div>
+					<div class="placeStatusItag">
+						<span class="iTag"><i class="fa-solid fa-phone"></i></span><p><%= place.getPhone() %></p>
+					</div>
+					
+					<button type="button" id="openModal">카카오 정보 페이지 보기</button>
+				</div>
+		</div>
+	</div>
+	<div class="reviewCon">
+
+		<div id="reviewCon">
+			<div class="slider">
+				<div id="review-container"></div>
+			</div>
 			
-%>
-			<form id="review-form" method="post">
-				<input type="text" name="reviewText" id="reviewText"> <button type="button" id="submitButton">작성</button>
-			</form>
-<%
-		}
-	} else {
-%>
-		--로그인 후 작성이 가능합니다--
-<%	
-	}
-%>
-	
-		
-	
+			<div id="review-write">
+				<div class="writeTitle">
+					<h2>시설에 대한 의견을 남겨보세요!</h2>
+				</div>
+				<div class="centerDiv">
+					<%
+						HttpSession session = request.getSession(false);
+						
+						if(session != null){
+							Member member = (Member)session.getAttribute("userStatus");
+							
+							if(member != null){
+								
+					%>
+						<form id="review-form" method="post">
+							<textarea name="reviewText" id="reviewText" ></textarea> <button type="button" id="submitButton">작성하기</button>
+						</form>
+					<%
+							} else {
+					%>
+							<p class="redText">-- 로그인 후 작성이 가능합니다 --</p>
+					<%
+							}
+						} else {
+					%>
+							<p class="redText">-- 로그인 후 작성이 가능합니다 --</p>
+					<%	
+						}
+					%>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
     <!-- 모달 구조 -->
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -242,7 +653,7 @@
 	<div id="editReviewModal" class="modal">
 	    <div class="modal-content">
 	        <span class="close">&times;</span>
-	        <h2>리뷰 수정</h2>
+	        <h2 class="editTitle">리뷰 수정</h2>
 	        <textarea id="editReviewText" rows="4" cols="50"></textarea>
 	        <button id="saveChanges">수정</button>
 	    </div>

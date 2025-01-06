@@ -63,7 +63,7 @@
 		<a href="/howAbout/diaries">다이어리</a>
 		<a href="/howAbout/recommend">추천게시판</a>
 		<a href="/howAbout/location">관광지</a>
-		<a href="/howAbout/place">시설검색</a>
+		<a href="/howAbout/place/serchRest">시설검색</a>
 		<a href="/howAbout/review">리뷰</a>
 		<a href="/howAbout/festival">축제</a>
 		<a href="/howAbout/schedule">캘린더</a>
