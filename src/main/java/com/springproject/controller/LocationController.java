@@ -167,7 +167,7 @@ public class LocationController
 	}
 
 	@GetMapping("/onelocation/{num}")
-	public String getOneLocation(@PathVariable int num, Model model)
+	public String getOneLocation(@PathVariable("num") int num, Model model)
 	{
 		System.out.println("LocationController getOneLocation in");
 		Location location = locationService.getOneLocation(num);
@@ -183,7 +183,7 @@ public class LocationController
 
 	
 	@GetMapping("/category/{category}")
-	public String getLocationOfCategory(@PathVariable String category, Model model)
+	public String getLocationOfCategory(@PathVariable("category") String category, Model model)
 	{
 		System.out.println("LocationController getLocationCategory in");
 		ArrayList<Location> locations = (ArrayList<Location>) locationService.getLocationOfCategory(category);
@@ -229,7 +229,7 @@ public class LocationController
 	}
 	
 	@GetMapping("/area/{area}")
-	public String getLocationOfArea(@PathVariable String area, Model model)
+	public String getLocationOfArea(@PathVariable("area") String area, Model model)
 	{
 		System.out.println("LocationController getLocationOfArea in");
 		List<Location> locationOfArea = locationService.getLocationOfArea(area);
@@ -295,7 +295,7 @@ public class LocationController
 
 	@GetMapping("/findLocation")
 	@ResponseBody
-	public List<Location> findLocations(@RequestParam String title)
+	public List<Location> findLocations(@RequestParam("title") String title)
 	{
 		System.out.println("LocationController findLocations in");
 		List<Location> find = locationService.findLocationByTitle(title);

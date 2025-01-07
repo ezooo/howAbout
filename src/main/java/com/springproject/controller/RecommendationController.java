@@ -106,7 +106,7 @@ public class RecommendationController
 	
 	// READ ONE : 제목만 보여주고 내용은 들어가야 볼 수 있음
 	@GetMapping("/recommendation/{recommendId}")
-	public String getRecommend(@PathVariable long recommendId, Model model)	//변수 받아온다 
+	public String getRecommend(@PathVariable("recommendId") long recommendId, Model model)	//변수 받아온다 
 	{
 		System.out.println("RecommendationController getRecommend in");
 		
@@ -133,7 +133,7 @@ public class RecommendationController
 	}
 
 	@GetMapping("/update/{recommendId}")
-	public String updateRecommend(@PathVariable long recommendId, Model model)
+	public String updateRecommend(@PathVariable("recommendId") long recommendId, Model model)
 	{	
 		System.out.println("RecommendationController updateRecommend get in");
 		Recommendation recommendation = recommendationService.getRecommend(recommendId);
@@ -152,7 +152,7 @@ public class RecommendationController
 	}
 	
 	@GetMapping("/delete/{recommendId}")
-	public String deleteRecommend(@PathVariable long recommendId)
+	public String deleteRecommend(@PathVariable("recommendId") long recommendId)
 	{
 		System.out.println("RecommendationController deleteRecommend  in");
 		recommendationService.deleteRecommend(recommendId);

@@ -94,31 +94,36 @@ body{
 
         .categoryItem {
         	width : 24%;
-        	aspect-ratio: 3 / 4;
+        	aspect-ratio: 5 / 6;
             background-color: white;
-		    padding: 1px;
 		    border: 1px solid #ddd;
 		    transition: transform 0.3s, z-index 0.3s;
 		    position: relative;
 		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-		    z-index: 2; /* 기본 z-index 설정 */
+		    z-index: 20; /* 기본 z-index 설정 */
 		    margin-top: 10px;
+		    margin-bottom: 10px;
 		    display : flex;
 		    flex-direction : column;
 		    justify-content: center;
+
         }
         #hoverbar
         {
         	position: absolute;
-        	bottom: -10px; /* 부모 요소 아래로 살짝 나오게 조정 */
+        	bottom: -5.1px; /* 부모 요소 아래로 살짝 나오게 조정 */
 		    left: 50%; /* 중앙 정렬을 위한 왼쪽 위치 */
 		    transform: translateX(-50%); /* 중앙 정렬을 위해 이동 */
         	width: 85%;
-        	height: 15px;
+        	height: 5px;
         	background-color: #ebebeb;
-        	z-index: -1;
-
+        	z-index: 1;
         }
+		.categoryItem:hover #hoverbar
+		{
+			background-color: #db7976;
+			transition: transform 0.5s ease
+		}
 
 		
         .categoryItem:hover {
@@ -126,7 +131,7 @@ body{
            	transform: ;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 3;
-            transition: transform 0.5s ease, box-shadow 0.3s ease; /* 부드러운 전환 효과 추가 */
+            transition: transform 0.2s ease, box-shadow 0.2s ease; /* 부드러운 전환 효과 추가 */
         }
 
 
@@ -134,28 +139,42 @@ body{
             text-decoration: none; /* 링크 밑줄 제거 */
             color: #333; /* 기본 글씨 색상 */
             width : 100%;
+            background-color: white;
+            z-index: 4;
+            text-align: center;
+            align-content : center;
+            align-items: center;
         }
         
         .imgbox
         {
         	width : 100%;
-            aspect-ratio: 5 / 6;
+            aspect-ratio: 1/1;
             display: flex; /* flexbox 사용 */
 		    flex-direction: column; /* 세로 방향으로 정렬 */
-		    justify-content: center; /* 세로 방향 가운데 정렬 */
+		    justify-content: flex-start; /* 세로 방향 가운데 정렬 */
 		    align-items: center; /* 가로 방향 가운데 정렬 */
+		    position : absolute;
+		    top : 0;
+            background-size: cover; /* 이미지 비율 유지하면서 잘라내기 */
+            background-position: center;
         }
 
         .categoryItem img {
             width: 100%; /* 이미지를 박스에 맞게 조정 */
-            object-fit: cover; /* 이미지 비율 유지하면서 잘라내기 */
         }
 
         .categoryItem a p {
             padding: 1px;
-            font-size: 15px; /* 제목 글씨 크기 조정 */
+            font-size: 16px; /* 제목 글씨 크기 조정 */
             margin: 0;
             text-align: center;
+            align-content : center;
+            align-items: center;
+            position: absolute;
+            bottom : 10px;
+
+            width : 100%;
         }
 </style>
 </head>
@@ -201,7 +220,7 @@ body{
     %>
             <div class="categoryItem">
                 <a href="/howAbout/location/category/<%= location.getCategory_name1() %>">
-                	<div class="imgbox"><img alt="사진없당" src="<%= location.getFileurl1() %>" /></div>
+                	<div class="imgbox" style="background-image: url('<%= location.getFileurl1() %>');"></div>
                     <p><%= location.getCategory_name1() %></p>
                 </a>
                 <div id="hoverbar"></div>

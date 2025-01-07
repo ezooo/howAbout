@@ -28,7 +28,7 @@ public class DiaryController
 	private DiaryService diaryService;
 
 
-	@RequestMapping
+	@GetMapping
 	public String showDiary(Model model, HttpServletRequest request)
 	{
 		System.out.println("다이어리 보여주기");

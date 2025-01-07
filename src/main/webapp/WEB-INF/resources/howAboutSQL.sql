@@ -15,8 +15,7 @@ create table aboutMember(
     enabled boolean,
     iconName text
 );
-select * from aboutMember;
-update aboutMember set enabled=1;
+
 CREATE TABLE email_tokens (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
@@ -110,7 +109,8 @@ create table if not exists festival(
     lnmadr text,
     latitude text,
     longitude text,     
-    referenceDate date
+    referenceDate date,
+    unique(fstvlNm(255), fstvlStartDate, fstvlEndDate)
 )CHARACTER SET utf8mb4;
 
 create table if not exists festival_db(
@@ -130,12 +130,9 @@ create table if not exists festival_db(
     lnmadr text,
     latitude text,
     longitude text,     
-    referenceDate date
+    referenceDate date,
+    unique(fstvlNm(255), fstvlStartDate, fstvlEndDate)
 )CHARACTER SET utf8mb4;
-
-insert into festival(fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate)
-select fstvlNm,opar,fstvlStartDate,fstvlEndDate,fstvlCo,mnnstNm,auspcInsttNm,suprtInsttNm,phoneNumber,homepageUrl,relateInfo,rdnmadr,lnmadr,latitude,longitude,referenceDate from festival_db
-where rdnmadr like "경상남도%" or lnmadr like "경상남도%";
 
 create table if not exists gnLatiInfo(
 	gsndo varchar(4),
@@ -164,15 +161,17 @@ create table location
 	 fileurl4 text,
      num int primary key auto_increment -- 순번
 );
-select * from location;
-delete from location where insttnm="창원";
+
 create table recommendation
 (
 	recommendId bigint primary key,
-    userId varchar(20),
+	userId varchar(20),
     recommendTitle varchar(40),
-	recommendContent varchar(500),
-	recommendDate varchar(20)
+	recommendContent text,
+	recommendDate varchar(20),
+    category varchar(5),
+    area char(3),
+    status varchar(4)
 );
 
 create table diary
@@ -188,7 +187,7 @@ create table diary
     filename2 varchar(50),
     filename3 varchar(50),
     isopen varchar(5),
-    foreign key(userId) references aboutMember(userId)
+    foreign key(userId) references aboutMember(userId) on delete cascade
 );
 
 create table weatherarea
